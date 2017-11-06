@@ -8,6 +8,8 @@ using namespace std;
 using namespace cv;
 
 
+
+
 int main(int argc, char **argv) {
     
     //读取图片
@@ -120,7 +122,19 @@ int main(int argc, char **argv) {
             good_matches.push_back(matches[i]);
     }
     
+    vector<Point3d>point_3d;
     
+    //z=fb/d d=ux-uy 这就测试一下
+    for(size_t i=0; i<good_matches.size(); i++)
+    {
+        Point3d p(
+            keypoint_left[good_matches[i].queryIdx].pt.x,
+            keypoint_left[good_matches[i].queryIdx].pt.y,
+            420*10/(keypoint_left[good_matches[i].queryIdx].pt.x-keypoint_right[good_matches[i].trainIdx].pt.x)
+            
+        );
+        point_3d.push_back(p);
+    }
     
     //画出来
     Mat matches_show;
@@ -133,6 +147,10 @@ int main(int argc, char **argv) {
     
     
 
+    for(Point3d p:point_3d)
+    {
+        cout<<p.x<<" "<<p.y<<" "<<p.z<<endl;
+    }
 
     
     
