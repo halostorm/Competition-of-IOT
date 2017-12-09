@@ -5,7 +5,7 @@ import time, sys, argparse, math
 
 # Connect to the Vehicle
 print "Connecting"
-connection_string = '/dev/ttyACM2'
+connection_string = '/dev/ttyACM0'
 vehicle = connect(connection_string, wait_ready=True)
 
 # Display basic vehicle state
