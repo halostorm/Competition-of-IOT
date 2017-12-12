@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/hao/projects/Competition-of-IOT/area_reprojected/src/config.cpp" "/home/hao/projects/Competition-of-IOT/area_reprojected/build/src/CMakeFiles/my_refind.dir/config.cpp.o"
+  "/home/pi/src/Competition-of-IOT/area_reprojected/src/config.cpp" "/home/pi/src/Competition-of-IOT/area_reprojected/build/src/CMakeFiles/my_refind.dir/config.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
