@@ -126,11 +126,13 @@ int main(int argc, char **argv) {
 
 	//对好的匹配，把像素坐标映射到相机坐标系
 	vector<Point2d> pts_1, pts_2;
+	int k=0;
 	for (DMatch m : good_matches) {
 		pts_1.push_back(pixel2cam(keypoints_left[m.queryIdx].pt, stereo.K_l));
 		pts_2.push_back(pixel2cam(keypoints_right[m.trainIdx].pt, stereo.K_r));
+		k++;
 	}
-
+	cout << "good_matches count: "<<k<< endl;
 	cout << "caculate xyz" << endl;
 
 	//opencv里自带的算3d坐标的函数，计算匹配点对在左相机坐标系下的3d坐标（不是归一化的，是齐次坐标系）
@@ -139,16 +141,23 @@ int main(int argc, char **argv) {
 	cout << "T1:\n" << endl;
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 4; j++) {
-			cout << T1.at<double>(i,j) << " ";
+			cout << T1.at<double>(i, j) << " ";
 		}
 		cout << "\n" << endl;
 	}
 	cout << "T2:\n" << endl;
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 4; j++) {
-			cout << T2.at<double>(i,j)<< " ";
+			cout << T2.at<double>(i, j) << " ";
 		}
 		cout << "\n" << endl;
+	}
+
+	for (int i = 0; i < 7; i++) {
+		cout << pts_1[i] << endl;
+	}
+	for (int i = 0; i < 7; i++) {
+		cout << pts_2[i] << endl;
 	}
 
 	triangulatePoints(T1, T2, pts_1, pts_2, pts_4d);
