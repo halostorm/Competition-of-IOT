@@ -1,8 +1,8 @@
-/home/pi/src/Competition-of-IOT/area_reprojected/build/CMakeFiles/rebuild_cache.dir
-/home/pi/src/Competition-of-IOT/area_reprojected/build/CMakeFiles/edit_cache.dir
-/home/pi/src/Competition-of-IOT/area_reprojected/build/src/CMakeFiles/rebuild_cache.dir
-/home/pi/src/Competition-of-IOT/area_reprojected/build/src/CMakeFiles/edit_cache.dir
-/home/pi/src/Competition-of-IOT/area_reprojected/build/src/CMakeFiles/my_refind.dir
-/home/pi/src/Competition-of-IOT/area_reprojected/build/test/CMakeFiles/rebuild_cache.dir
-/home/pi/src/Competition-of-IOT/area_reprojected/build/test/CMakeFiles/edit_cache.dir
-/home/pi/src/Competition-of-IOT/area_reprojected/build/test/CMakeFiles/area_reprojected.dir
+/home/halo/PX4/Competition-of-IOT/area_reprojected/build/CMakeFiles/rebuild_cache.dir
+/home/halo/PX4/Competition-of-IOT/area_reprojected/build/CMakeFiles/edit_cache.dir
+/home/halo/PX4/Competition-of-IOT/area_reprojected/build/src/CMakeFiles/rebuild_cache.dir
+/home/halo/PX4/Competition-of-IOT/area_reprojected/build/src/CMakeFiles/edit_cache.dir
+/home/halo/PX4/Competition-of-IOT/area_reprojected/build/src/CMakeFiles/my_refind.dir
+/home/halo/PX4/Competition-of-IOT/area_reprojected/build/test/CMakeFiles/rebuild_cache.dir
+/home/halo/PX4/Competition-of-IOT/area_reprojected/build/test/CMakeFiles/edit_cache.dir
+/home/halo/PX4/Competition-of-IOT/area_reprojected/build/test/CMakeFiles/area_reprojected.dir

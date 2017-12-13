@@ -6,5 +6,5 @@ CXX_FLAGS = -std=c++11 -march=native -O3 -O3 -DNDEBUG -fPIC
 
 CXX_DEFINES = -Dmy_refind_EXPORTS
 
-CXX_INCLUDES = -I/usr/include/eigen3 -isystem /usr/local/include -isystem /usr/local/include/opencv -I/home/pi/src/Competition-of-IOT/area_reprojected/include 
+CXX_INCLUDES = -I/usr/include/eigen3 -isystem /usr/include/opencv -I/home/halo/PX4/Competition-of-IOT/area_reprojected/include 
 
