@@ -98,6 +98,11 @@ int main(int argc, char **argv)
 	      good_matches.push_back(matches[i]);
 	}
 	
+	if(good_matches.size()<5)
+	{
+	  cout<<"too small matches"<<endl;
+	  return 0;
+	}
 	
 	Mat matches_show;
 	drawMatches(img_left_rect,keypoints_left,img_right_rect,keypoints_right,good_matches,matches_show);
