@@ -87,6 +87,7 @@ int main(int argc, char **argv) {
 		if (dist > max_dist)
 			max_dist = dist;
 	}
+<<<<<<< HEAD
 	//选取好的匹配
 	vector < DMatch > good_matches;
 	for (size_t i = 0; i < desciptors_left.rows; i++) {
@@ -96,6 +97,15 @@ int main(int argc, char **argv) {
 
 	cout << "Match ok" << endl;
 
+=======
+	
+	if(good_matches.size()<5)
+	{
+	  cout<<"too small matches"<<endl;
+	  return 0;
+	}
+	
+>>>>>>> 65c7eafbe21a503240bb7610130c0b0630baead7
 	Mat matches_show;
 	drawMatches(img_left_rect, keypoints_left, img_right_rect, keypoints_right,
 			good_matches, matches_show);
