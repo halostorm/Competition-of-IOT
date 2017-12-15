@@ -31,6 +31,8 @@ iostream
 -
 my_refind/config.h
 /home/pi/src/Competition-of-IOT/area_reprojected/test/my_refind/config.h
+unistd.h
+-
 
 /usr/local/include/opencv/cxcore.h
 opencv2/core/core_c.h

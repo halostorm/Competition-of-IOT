@@ -1,5 +1,6 @@
 #include <iostream>
 #include "my_refind/config.h"
+#include <unistd.h>
 
 //像素坐标系和相机坐标系（归一化的，就是说d=1）的转化
 Point2f pixel2cam(const Point2d& p, const Mat& K);
@@ -13,10 +14,64 @@ int main(int argc, char **argv) {
 		return -1;
 	}
 
-	//读入左右两幅图片
+	VideoCapture camleft(0);
+	VideoCapture camright(1);
+
+    	camleft.set(CV_CAP_PROP_FRAME_WIDTH,640);
+    	camleft.set(CV_CAP_PROP_FRAME_HEIGHT,480);
+
+    	camright.set(CV_CAP_PROP_FRAME_WIDTH,640);
+   	camright.set(CV_CAP_PROP_FRAME_HEIGHT,480);
+
 	Mat img_left, img_right;
-	img_left = imread(argv[1]);
-	img_right = imread(argv[2]);
+
+	int num = 0;
+	char imageleft[50];
+	char imageright[50];
+	while (1)
+	{
+        	if(!camleft.isOpened()||!camright.isOpened())
+        	{
+           	 //cout<<"camera open error"<<endl;
+            		return -1;
+        	}
+
+        	//cout<<"camera open succeed "<<endl;
+
+		camleft   >> img_left;
+		camright  >> img_right;
+
+		imshow("camleft",img_left);
+		imshow("camright",img_right);
+		usleep(50000);
+
+		char c = waitKey(10);
+		if (c == 27)
+		{
+            		//按esc退出
+			break;
+		}
+		if (c == 32)
+		{
+            		//拍空格保存
+            		time_t now = time(0);
+           		tm* ltm = localtime(&now);
+
+			//sprintf(imageleft,  "%s%02d%02d%02d%02d%02d%s","../camleft/camleft_", 1+ltm->tm_mon,ltm->tm_mday,ltm->tm_hour,ltm->tm_min,ltm->tm_sec,".png");
+            		//sprintf(imageright,  "%s%02d%02d%02d%02d%02d%s","../camright/camright_", 1+ltm->tm_mon,ltm->tm_mday,ltm->tm_hour,ltm->tm_min,ltm->tm_sec,".png");
+			sprintf(imageleft,  "%s%d%s","../camleft/camleft_",num,".png");
+            		sprintf(imageright,  "%s%d%s","../camright/camright_",num,".png");
+			imwrite(imageleft, img_left);
+			imwrite(imageright, img_right);
+			cout<<"store ok"<<endl;
+			num++;	
+		}
+	}
+
+	//读入左右两幅图片
+	//Mat img_left, img_right;
+	//img_left = imread(argv[1]);
+	//img_right = imread(argv[2]);
 	cout << "read img ok" << endl;
 	//读入相机参数
 	Config stereo(argv[3]);
@@ -75,11 +130,12 @@ int main(int argc, char **argv) {
 	//在图像中计算描述子
 	orb->compute(img_left_rect, keypoints_left, desciptors_left);
 	orb->compute(img_right_rect, keypoints_right, descriptors_right);
-
+	printf("rows1: %d\n",desciptors_left.rows);
 	//匹配计算，用汉明码暴力匹配，通过描述子计算匹配对
 	vector < DMatch > matches;
 	BFMatcher matcher(NORM_HAMMING);
 	matcher.match(desciptors_left, descriptors_right, matches);
+	printf("rows2: %d\n",desciptors_left.rows);
 
 	double max_dist = 0;
 	for (size_t i = 0; i < desciptors_left.rows; i++) {
@@ -87,7 +143,7 @@ int main(int argc, char **argv) {
 		if (dist > max_dist)
 			max_dist = dist;
 	}
-<<<<<<< HEAD
+	printf("max_dist: %f\n",max_dist);
 	//选取好的匹配
 	vector < DMatch > good_matches;
 	for (size_t i = 0; i < desciptors_left.rows; i++) {
@@ -96,16 +152,13 @@ int main(int argc, char **argv) {
 	}
 
 	cout << "Match ok" << endl;
-
-=======
 	
 	if(good_matches.size()<5)
 	{
 	  cout<<"too small matches"<<endl;
-	  return 0;
+	  //return 0;
 	}
 	
->>>>>>> 65c7eafbe21a503240bb7610130c0b0630baead7
 	Mat matches_show;
 	drawMatches(img_left_rect, keypoints_left, img_right_rect, keypoints_right,
 			good_matches, matches_show);
@@ -161,13 +214,6 @@ int main(int argc, char **argv) {
 			cout << T2.at<double>(i, j) << " ";
 		}
 		cout << "\n" << endl;
-	}
-
-	for (int i = 0; i < 7; i++) {
-		cout << pts_1[i] << endl;
-	}
-	for (int i = 0; i < 7; i++) {
-		cout << pts_2[i] << endl;
 	}
 
 	triangulatePoints(T1, T2, pts_1, pts_2, pts_4d);

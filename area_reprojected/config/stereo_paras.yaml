@@ -5,8 +5,8 @@
 # Stereo Rectification. Only if you need to pre-rectify the images.
 # Camera.fx, .fy, etc must be the same as in LEFT.P
 #--------------------------------------------------------------------------------------------
-LEFT.height: 240
-LEFT.width: 320
+LEFT.height: 480
+LEFT.width: 640
 LEFT.D: !!opencv-matrix
    rows: 1
    cols: 5
@@ -19,8 +19,8 @@ LEFT.K: !!opencv-matrix
    data: [177.0648, 0.2860, 171.6758, 0.0, 235.9113, 129.4879, 0.0, 0.0, 1.0]
 
 
-RIGHT.height: 240
-RIGHT.width: 320
+RIGHT.height: 480
+RIGHT.width: 640
 RIGHT.D: !!opencv-matrix
    rows: 1
    cols: 5
