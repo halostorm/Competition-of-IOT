@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/halo/PX4/Competition-of-IOT/area_reprojected
+CMAKE_SOURCE_DIR = /home/pi/src/Competition-of-IOT/area_reprojected
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/halo/PX4/Competition-of-IOT/area_reprojected/build
+CMAKE_BINARY_DIR = /home/pi/src/Competition-of-IOT/area_reprojected/build
 
 # Include any dependencies generated for this target.
 include test/CMakeFiles/area_reprojected.dir/depend.make
@@ -59,16 +59,16 @@ include test/CMakeFiles/area_reprojected.dir/flags.make
 
 test/CMakeFiles/area_reprojected.dir/main.cpp.o: test/CMakeFiles/area_reprojected.dir/flags.make
 test/CMakeFiles/area_reprojected.dir/main.cpp.o: ../test/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/halo/PX4/Competition-of-IOT/area_reprojected/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object test/CMakeFiles/area_reprojected.dir/main.cpp.o"
-	cd /home/halo/PX4/Competition-of-IOT/area_reprojected/build/test && g++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/area_reprojected.dir/main.cpp.o -c /home/halo/PX4/Competition-of-IOT/area_reprojected/test/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pi/src/Competition-of-IOT/area_reprojected/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object test/CMakeFiles/area_reprojected.dir/main.cpp.o"
+	cd /home/pi/src/Competition-of-IOT/area_reprojected/build/test && g++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/area_reprojected.dir/main.cpp.o -c /home/pi/src/Competition-of-IOT/area_reprojected/test/main.cpp
 
 test/CMakeFiles/area_reprojected.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/area_reprojected.dir/main.cpp.i"
-	cd /home/halo/PX4/Competition-of-IOT/area_reprojected/build/test && g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/halo/PX4/Competition-of-IOT/area_reprojected/test/main.cpp > CMakeFiles/area_reprojected.dir/main.cpp.i
+	cd /home/pi/src/Competition-of-IOT/area_reprojected/build/test && g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pi/src/Competition-of-IOT/area_reprojected/test/main.cpp > CMakeFiles/area_reprojected.dir/main.cpp.i
 
 test/CMakeFiles/area_reprojected.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/area_reprojected.dir/main.cpp.s"
-	cd /home/halo/PX4/Competition-of-IOT/area_reprojected/build/test && g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/halo/PX4/Competition-of-IOT/area_reprojected/test/main.cpp -o CMakeFiles/area_reprojected.dir/main.cpp.s
+	cd /home/pi/src/Competition-of-IOT/area_reprojected/build/test && g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pi/src/Competition-of-IOT/area_reprojected/test/main.cpp -o CMakeFiles/area_reprojected.dir/main.cpp.s
 
 test/CMakeFiles/area_reprojected.dir/main.cpp.o.requires:
 
@@ -91,25 +91,25 @@ area_reprojected_EXTERNAL_OBJECTS =
 ../bin/area_reprojected: test/CMakeFiles/area_reprojected.dir/main.cpp.o
 ../bin/area_reprojected: test/CMakeFiles/area_reprojected.dir/build.make
 ../bin/area_reprojected: ../lib/libmy_refind.so
-../bin/area_reprojected: /usr/lib/libopencv_shape.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_stitching.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_objdetect.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_superres.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_videostab.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_calib3d.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_features2d.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_flann.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_highgui.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_ml.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_photo.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_video.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_videoio.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_imgcodecs.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_imgproc.so.3.2.0
-../bin/area_reprojected: /usr/lib/libopencv_core.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_shape.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_stitching.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_objdetect.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_superres.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_videostab.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_calib3d.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_features2d.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_flann.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_highgui.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_ml.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_photo.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_video.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_videoio.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_imgcodecs.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_imgproc.so.3.2.0
+../bin/area_reprojected: /usr/local/lib/libopencv_core.so.3.2.0
 ../bin/area_reprojected: test/CMakeFiles/area_reprojected.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/halo/PX4/Competition-of-IOT/area_reprojected/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../../bin/area_reprojected"
-	cd /home/halo/PX4/Competition-of-IOT/area_reprojected/build/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/area_reprojected.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/pi/src/Competition-of-IOT/area_reprojected/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../../bin/area_reprojected"
+	cd /home/pi/src/Competition-of-IOT/area_reprojected/build/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/area_reprojected.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 test/CMakeFiles/area_reprojected.dir/build: ../bin/area_reprojected
@@ -121,10 +121,10 @@ test/CMakeFiles/area_reprojected.dir/requires: test/CMakeFiles/area_reprojected.
 .PHONY : test/CMakeFiles/area_reprojected.dir/requires
 
 test/CMakeFiles/area_reprojected.dir/clean:
-	cd /home/halo/PX4/Competition-of-IOT/area_reprojected/build/test && $(CMAKE_COMMAND) -P CMakeFiles/area_reprojected.dir/cmake_clean.cmake
+	cd /home/pi/src/Competition-of-IOT/area_reprojected/build/test && $(CMAKE_COMMAND) -P CMakeFiles/area_reprojected.dir/cmake_clean.cmake
 .PHONY : test/CMakeFiles/area_reprojected.dir/clean
 
 test/CMakeFiles/area_reprojected.dir/depend:
-	cd /home/halo/PX4/Competition-of-IOT/area_reprojected/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/halo/PX4/Competition-of-IOT/area_reprojected /home/halo/PX4/Competition-of-IOT/area_reprojected/test /home/halo/PX4/Competition-of-IOT/area_reprojected/build /home/halo/PX4/Competition-of-IOT/area_reprojected/build/test /home/halo/PX4/Competition-of-IOT/area_reprojected/build/test/CMakeFiles/area_reprojected.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/pi/src/Competition-of-IOT/area_reprojected/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pi/src/Competition-of-IOT/area_reprojected /home/pi/src/Competition-of-IOT/area_reprojected/test /home/pi/src/Competition-of-IOT/area_reprojected/build /home/pi/src/Competition-of-IOT/area_reprojected/build/test /home/pi/src/Competition-of-IOT/area_reprojected/build/test/CMakeFiles/area_reprojected.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : test/CMakeFiles/area_reprojected.dir/depend
 
