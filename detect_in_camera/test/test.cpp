@@ -196,20 +196,39 @@ int main(int argc, char **argv)
 		
 	     }
 
+	     //如果只有左边检测到，给个可能的区域，物体在那个射线上
 	     else if(target_left.size()==1 && target_right.size()==0)
 	     {
 	       cout<<"left detect and right not detect";
-	       
-	    }
-	     else if(target_left.size()==0 && target_right.size()==1)
-	     {
-	       cout<<"right detect and left not detect";
-	       
+	       orb->detect(pic_left_rect(target_left[0]),keypoints_left);
+	       for(size_t i=0; i<keypoints_left.size(); i++)
+		{
+			keypoints_left[i].pt=keypoints_left[i].pt + Point2f(target_left[0].x,target_left[0].y);
+		}
+		vector<Point2d> pts_left;
+	       for(auto k:keypoints_left)
+	       {
+		 pts_left.push_back(pixel2cam(k.pt,stereo.K_l));
+	      }
+		double x_left=0,y_left=0,z_left=1000;
+		for(int i=0;i<pts_left.size();i++)
+		  {
+		    x_left+=pts_left[i].x;
+		    y_left+=pts_left[i].y;
+
+		   }
+		  x_left/=pts_left.size();
+		  y_left/=pts_left.size();
+		
+		cout<<"target 3d corrdinate:"<<endl<<x_left*1000<<"		"<<y_left*1000<<"		"<<z_left<<endl;
+		cout<<endl;
+		
+
 	    }
 
 	    else
 	    {
-		cout<<"two much target";
+		cout<<"two much target，wait for next"<<endl;
 	    }
 	    
 	  }  
