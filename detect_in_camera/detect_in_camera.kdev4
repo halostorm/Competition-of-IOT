@@ -1,0 +1,3 @@
+[Project]
+Manager=KDevCMakeManager
+Name=detect_in_camera
