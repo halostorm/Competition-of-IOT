@@ -10,6 +10,8 @@
 #include <opencv2/calib3d.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv2/features2d.hpp>
+#include <opencv2/video.hpp>
+#include <ctime>
 
 using namespace std;
 using namespace cv;

@@ -13,16 +13,26 @@ int main(int argc, char **argv)
 		cerr<<"usage: ./area_reprojected  stereo_camera_config target_detect_config"<<endl;
 		return -1;
 	}
-	
+	cout<<"program start ok"<<endl;
 	//打开两个相机，先插左边的，再插右边的，设置分辨率
 	VideoCapture cam_left(0);
 	VideoCapture cam_right(1);
 	
-	cam_left.set(CV_CAP_PROP_FRAME_WIDTH,640);
-	cam_left.set(CV_CAP_PROP_FRAME_HEIGHT,480);
+	cout<<"find camera ok"<<endl;
+
+	cam_left.set(CV_CAP_PROP_FRAME_WIDTH,320);
+	cam_left.set(CV_CAP_PROP_FRAME_HEIGHT,240);
 	
-	cam_right.set(CV_CAP_PROP_FRAME_WIDTH,640);
-	cam_right.set(CV_CAP_PROP_FRAME_HEIGHT,480);
+	cam_right.set(CV_CAP_PROP_FRAME_WIDTH,320);
+	cam_right.set(CV_CAP_PROP_FRAME_HEIGHT,240);
+
+	//cam_left.set(CV_CAP_PROP_MODE, 1);
+	//cam_right.set(CV_CAP_PROP_MODE, 1);
+
+	cam_left.set(CV_CAP_PROP_FOURCC, CV_FOURCC('M','J','P','G'));
+	cam_right.set(CV_CAP_PROP_FOURCC, CV_FOURCC('M','J','P','G'));
+	
+	cout<<"camera set ok"<<endl;
 	
 	//如果打开失败，报错
 	if(!cam_left.isOpened()||!cam_right.isOpened())
@@ -31,9 +41,10 @@ int main(int argc, char **argv)
 	  return -1;
 	  
 	}
-	
+	cout<<"camera open ok"<<endl;
 	//读入相机参数，这个要按照你标定的来，例子给的是1080p的，肯定不行
-	Config stereo(argv[3]);
+	Config stereo(argv[1]);
+	cout<<"stereo config ok"<<endl;
 	Mat T1 = (Mat_<double> (3,4) <<
         1,0,0,0,
         0,1,0,0,
@@ -54,8 +65,9 @@ int main(int argc, char **argv)
 	
 	//初始化级联分类器，这里以opencv自带的人脸识别的xml文件为例
 	CascadeClassifier cascade;
-	cascade.load(argv[4]);
+	cascade.load(argv[2]);
 	
+	cout<<"cascade load ok"<<endl;
 	//初始化参数
 	Mat pic_left,pic_right;
 	Mat pic_left_rect,pic_right_rect;
@@ -71,16 +83,18 @@ int main(int argc, char **argv)
 	
 	
 	int loop=0;
-	
+	cout<<"begin video"<<endl;
 	while(1)
 	{
 	  //视频流输入图片
-	  cam_left>>pic_left;
-	  cam_right>>pic_right;
-	  
+	  cam_left >> pic_left;
+	  cam_right >> pic_right;	  
+
 	  //多少个周期一检测，视情况调整
-	  if(loop%30==0)
+	  if(loop%10==0)
 	  {
+	    //imshow("left",pic_left);
+	    //imshow("right",pic_right);
 	    loop=0;
 	    
 	    //先对图片做矫正
@@ -106,7 +120,7 @@ int main(int argc, char **argv)
 	     }
 	     
 	     //如果两边各有一个，认为是同一个
-	    else if(target_left.size()==1 && target_right.size()==1)
+	     else if(target_left.size()==1 && target_right.size()==1)
 	     {
 		cout<<"one target, and detected by two camera"<<endl;
 		
@@ -149,6 +163,29 @@ int main(int argc, char **argv)
 		if(good_matches.size()<5)
 		{
 		  cout<<"too small matches, wait for next detect"<<endl;
+		  
+	       	  cout<<"left detect and right not detect";
+	          orb->detect(pic_left_rect(target_left[0]),keypoints_left);
+	          for(size_t i=0; i<keypoints_left.size(); i++)
+		  {
+			keypoints_left[i].pt=keypoints_left[i].pt + Point2f(target_left[0].x,target_left[0].y);
+		  }
+		  vector<Point2d> pts_left;
+	          for(auto k:keypoints_left)
+	          {
+		        pts_left.push_back(pixel2cam(k.pt,stereo.K_l));
+	          }
+		  double x_left=0,y_left=0,z_left=1000;
+		  for(int i=0;i<pts_left.size();i++)
+		  {
+		        x_left+=pts_left[i].x;
+		        y_left+=pts_left[i].y;
+
+		  }
+		  x_left/=pts_left.size();
+		  y_left/=pts_left.size();
+		
+		  cout<<"target 3d corrdinate:"<<endl<<x_left*1000<<"		"<<y_left*1000<<"		"<<z_left<<endl;
 		}
 		
 		else
@@ -221,9 +258,6 @@ int main(int argc, char **argv)
 		  y_left/=pts_left.size();
 		
 		cout<<"target 3d corrdinate:"<<endl<<x_left*1000<<"		"<<y_left*1000<<"		"<<z_left<<endl;
-		cout<<endl;
-		
-
 	    }
 
 	    else
@@ -236,13 +270,18 @@ int main(int argc, char **argv)
 	  {
 	    loop++;
 	  }
-	  char c;
+	  char c = waitKey(10);
 	  if(c==32)
 	  {
-	    imwrite("./img_left.jpg",pic_left);
-	    imwrite("./img_right.jpg",pic_right);
+	    imwrite("../img_left.jpg",pic_left);
+	    imwrite("../img_right.jpg",pic_right);
 	  }
-	  
+	  if (c == 27)
+	  {
+		break;
+	  }	  
+	  //imshow("left",pic_left);
+	  //imshow("right",pic_right);
 	}
     return 0;
 }
