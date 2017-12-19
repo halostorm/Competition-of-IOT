@@ -1,4 +1,4 @@
-# Install script for directory: /home/pi/src/Competition-of-IOT/area_reprojected/test
+# Install script for directory: /home/hao/projects/Competition-of-IOT/area_reprojected/test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

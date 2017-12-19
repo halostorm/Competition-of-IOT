@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/pi/src/Competition-of-IOT/area_reprojected/test/main.cpp" "/home/pi/src/Competition-of-IOT/area_reprojected/build/test/CMakeFiles/area_reprojected.dir/main.cpp.o"
+  "/home/hao/projects/Competition-of-IOT/area_reprojected/test/main.cpp" "/home/hao/projects/Competition-of-IOT/area_reprojected/build/test/CMakeFiles/area_reprojected.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -18,7 +18,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/pi/src/Competition-of-IOT/area_reprojected/build/src/CMakeFiles/my_refind.dir/DependInfo.cmake"
+  "/home/hao/projects/Competition-of-IOT/area_reprojected/build/src/CMakeFiles/my_refind.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.
