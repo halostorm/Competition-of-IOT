@@ -1,0 +1,4 @@
+/home/pi/src/Competition-of-IOT/vision_control/Flight2/build/CMakeFiles/rebuild_cache.dir
+/home/pi/src/Competition-of-IOT/vision_control/Flight2/build/CMakeFiles/edit_cache.dir
+/home/pi/src/Competition-of-IOT/vision_control/Flight2/build/CMakeFiles/test.dir
+/home/pi/src/Competition-of-IOT/vision_control/Flight2/build/CMakeFiles/aka.dir

@@ -1,0 +1,5 @@
+ID:1040353
+KEY:596a417c94a0cb63796b5474cef48e24b85be6bdd792a98318171de84fdc5bda
+DeviceName: /dev/ttyTHS1
+BaudRate: 230400
+Version: versionM100_31
