@@ -10,4 +10,4 @@ cd build
 cmake ..
 make
 cd ../bin
-./area_reprojected ../config/stereo_paras.yaml ../config/haarcascade_frontalface_alt.xml
+./test ../config/stereo_paras.yaml ../config/haarcascade_frontalface_alt.xml

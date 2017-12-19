@@ -1,0 +1,44 @@
+#include <opencv2/opencv.hpp>
+#include <vector>
+#include <string>
+#include <iostream>
+using namespace cv;
+using namespace std;
+
+class PointKF
+{
+public:
+	KalmanFilter KF;
+	Mat measurement;
+	Point kfpoint;
+	Point predict_pt;
+	void kalmanInit();
+	void kalmanPredict(int dx,int dy);
+};
+void PointKF::kalmanInit()
+{
+	KF.init(4, 2, 0);  
+	KF.transitionMatrix = (Mat_<float>(4, 4) <<1,0,1,0,0,1,0,1,0,0,1,0,0,0,0,1);
+	setIdentity(KF.measurementMatrix);//H=[1,0,0,0;0,1,0,0] 测量矩阵  
+
+    	setIdentity(KF.processNoiseCov, Scalar::all(1e-6));//Q高斯白噪声，单位阵  
+    	setIdentity(KF.measurementNoiseCov, Scalar::all(1e-3));//R高斯白噪声，单位阵  
+    	setIdentity(KF.errorCovPost, Scalar::all(1));//P后验误差估计协方差矩阵，初始化为单位阵  
+    	randn(KF.statePost, Scalar::all(0), Scalar::all(0.1));//初始化状态为随机值
+   	measurement = Mat::zeros(2, 1, CV_32F);
+    	predict_pt=Point(0,0);
+    	KF.predict();
+}
+void PointKF::kalmanPredict(int dx,int dy)
+{
+	
+	measurement.at<float>(0) = (float)dx;  
+    	measurement.at<float>(1) = (float)dy;  
+    	Mat est=KF.correct(measurement);
+    	kfpoint.x=est.at<float>(0);
+	kfpoint.y=est.at<float>(1);
+	Mat prediction = KF.predict();  
+	predict_pt.x=(int)prediction.at<float>(0);
+	predict_pt.y=(int)prediction.at<float>(1);
+	//cout<<"Center:"<<center<<"Predict:"<<predict_pt<<"Estimation:"<<kfpoint<<endl;
+}
