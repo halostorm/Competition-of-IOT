@@ -93,8 +93,8 @@ int main(int argc, char **argv) {
 	Mat gray_left, gray_right;
 	vector<Rect> target_left;
 	vector<Rect> target_right;
-	Rect2d target_left_box;
-	Rect2d target_right_box;
+	//Rect2d target_left_box;
+	//Rect2d target_right_box;
 	bool right_detected = false;	//detected flag;
 	bool left_detected = false;
 	bool tracker_initialized = false;	//
@@ -143,9 +143,9 @@ int main(int argc, char **argv) {
 				right_detected = false;
 			}
 			if (!tracker_initialized && left_detected && right_detected) {//initializes the tracker//only do one time
-				target_left_box((double)target_left[0].x,(double)target_left[0].y,
+				Rect2d target_left_box((double)target_left[0].x,(double)target_left[0].y,
 						(double)target_left[0].width, (double)target_left[0].height);
-				target_right_box((double)target_right[0].x,(double)target_right[0].y,
+				Rect2d target_right_box((double)target_right[0].x,(double)target_right[0].y,
 						(double)target_right[0].width, (double)target_right[0].height);
 				if (!tracker_left->init(pic_left, target_left_box)) {
 					cout << "***Could not initialize left tracker...***\n";
@@ -161,6 +161,8 @@ int main(int argc, char **argv) {
 				continue;
 			} else if (tracker_initialized) {
 				//updates the tracker
+				Rect2d target_left_box;
+				Rect2d target_right_box;
 				if (tracker_left->update(pic_left, target_left_box)) {
 					//rectangle(image, target_left, Scalar(255, 0, 0), 2, 1);
 					if (!target_left.size() == 1) {	//if left no target, continue
@@ -186,9 +188,8 @@ int main(int argc, char **argv) {
 					cout << "one target, and detected by two camera" << endl;
 
 					//提取target所在区域的特征点
-					orb->detect(pic_left_rect(target_left[0]), keypoints_left);
-					orb->detect(pic_right_rect(target_right[0]),
-							keypoints_right);
+					orb->detect(pic_left_rect(target_left_box), keypoints_left);
+					orb->detect(pic_right_rect(target_right_box), keypoints_right);
 
 					//将特征点坐标值加上目标框的坐标值，回归到整个图像的坐标
 					for (size_t i = 0; i < keypoints_left.size(); i++) {
