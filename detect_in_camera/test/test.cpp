@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
 		cam_left >> pic_left;
 		cam_right >> pic_right;
 		//多少个周期一检测，视情况调整
-		if (loop % 30 == 0) {
+		if (loop % 10 == 0) {
 			loop = 0;
 			//先对图片做矫正
 			stereo.doRectifyL(pic_left, pic_left_rect);
