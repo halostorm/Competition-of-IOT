@@ -207,7 +207,8 @@ int main(int argc, char **argv) {
 					orb->compute(pic_left, keypoints_left, desciptors_left);
 					orb->compute(pic_right_rect, keypoints_right,
 							descriptors_right);
-
+					imshow("left",pic_left);
+					imshow("right",pic_right);
 					//对特征点进行匹配
 					matcher.match(desciptors_left, descriptors_right, matches);
 
@@ -288,8 +289,7 @@ int main(int argc, char **argv) {
 				}
 				//如果只有左边检测到，给个可能的区域，物体在那个射线上
 				else if (left_detected && !right_detected) {//only left
-					cout
-							<< "left detect and right not detect, use only left camera";
+					cout<< "left detect and right not detect, use only left camera";
 					orb->detect(pic_left_rect(target_left_box), keypoints_left);
 					for (size_t i = 0; i < keypoints_left.size(); i++) {
 						keypoints_left[i].pt = keypoints_left[i].pt
@@ -310,6 +310,8 @@ int main(int argc, char **argv) {
 
 					cout << "target 3d corrdinate:" << endl << x_left * 1000
 							<< "	" << y_left * 1000 << "	" << z_left << endl;
+					imshow("left",pic_left);
+					imshow("right",pic_right);
 				} else if (!left_detected && !left_detected) {//no left and no right
 					cout << "no target，wait for next" << endl;
 				}
