@@ -113,7 +113,7 @@ int main(int argc, char** argv) {
 				initialized = true;
 			} else if (initialized) {
 				//updates the tracker
-				if (tracker->update(frame, boundingBox1)) {
+				if (tracker->update(frame, boundingBox)) {
 					rectangle(image, boundingBox, Scalar(255, 0, 0), 2, 1);
 				}
 			}
