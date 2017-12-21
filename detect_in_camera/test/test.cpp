@@ -169,13 +169,13 @@ int main(int argc, char **argv) {
 				Rect2d target_left_box;
 				Rect2d target_right_box;
 				if (tracker_left->update(pic_left, target_left_box)) {
-					//rectangle(image, target_left, Scalar(255, 0, 0), 2, 1);
+					rectangle(pic_left, target_left_box, Scalar(255, 0, 0), 2, 1);
 					left_detected = true;
 				} else {
 					left_detected = false;
 				}
 				if (tracker_right->update(pic_right, target_right_box)) {
-					//rectangle(image, target_left, Scalar(255, 0, 0), 2, 1);
+					rectangle(pic_right, target_right_box, Scalar(255, 0, 0), 2, 1);
 					right_detected = true;
 				} else {
 					right_detected = false;
