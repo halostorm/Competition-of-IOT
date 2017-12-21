@@ -124,3 +124,6 @@ src/CMakeFiles/my_detect.dir/config.cpp.o
  /usr/local/include/opencv2/videostab/ring_buffer.hpp
  /usr/local/include/opencv2/videostab/stabilizer.hpp
  /usr/local/include/opencv2/videostab/wobble_suppression.hpp
+ /usr/local/include/opencv2/xfeatures2d.hpp
+ /usr/local/include/opencv2/xfeatures2d/cuda.hpp
+ /usr/local/include/opencv2/xfeatures2d/nonfree.hpp
