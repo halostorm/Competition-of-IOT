@@ -93,7 +93,8 @@ int main(int argc, char **argv) {
 	Mat gray_left, gray_right;
 	vector<Rect> target_left;
 	vector<Rect> target_right;
-
+	Rect2d target_left_box;
+	Rect2d target_right_box;
 	bool right_detected = false;	//detected flag;
 	bool left_detected = false;
 	bool tracker_initialized = false;	//
@@ -143,12 +144,12 @@ int main(int argc, char **argv) {
 			}
 			target_left(0);
 			if (!tracker_initialized && left_detected && right_detected) {//initializes the tracker//only do one time
-				if (!tracker_left->init(pic_left, target_left(0))) {
+				if (!tracker_left->init(pic_left, target_left_box)) {
 					cout << "***Could not initialize left tracker...***\n";
 					left_detected = false;
 					continue;
 				}
-				if (!tracker_right->init(pic_right, target_right(0))) {
+				if (!tracker_right->init(pic_right, target_right_box)) {
 					cout << "***Could not initialize right tracker...***\n";
 					right_detected = false;
 					continue;
@@ -157,7 +158,7 @@ int main(int argc, char **argv) {
 				continue;
 			} else if (tracker_initialized) {
 				//updates the tracker
-				if (tracker_left->update(pic_left, target_left(0))) {
+				if (tracker_left->update(pic_left, target_left_box)) {
 					//rectangle(image, target_left, Scalar(255, 0, 0), 2, 1);
 					if (!target_left.size() == 1) {	//if left no target, continue
 						left_detected = true;
@@ -165,7 +166,7 @@ int main(int argc, char **argv) {
 						left_detected = false;
 					}
 				}
-				if (tracker_right->update(pic_right, target_right(0))) {
+				if (tracker_right->update(pic_right, target_right_box)) {
 					//rectangle(image, target_left, Scalar(255, 0, 0), 2, 1);
 					if (!target_right.size() == 1) {
 						right_detected = true;
