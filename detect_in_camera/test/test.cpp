@@ -131,22 +131,27 @@ int main(int argc, char **argv) {
 				cascade.detectMultiScale(gray_right, target_right, 1.1, 2,
 						0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 			}
-			if (!target_left.size() == 1) {	//if left no target, continue
+			if (target_left.size() == 1) {	//if left no target, continue
 				left_detected = true;
 			} else {
 				left_detected = false;
 				continue;
 			}
-			if (!target_right.size() == 1) {
+			if (target_right.size() == 1) {
 				right_detected = true;
 			} else {
 				right_detected = false;
 			}
 			if (!tracker_initialized && left_detected && right_detected) {//initializes the tracker//only do one time
-				Rect2d target_left_box((double)target_left[0].x,(double)target_left[0].y,
-						(double)target_left[0].width, (double)target_left[0].height);
-				Rect2d target_right_box((double)target_right[0].x,(double)target_right[0].y,
-						(double)target_right[0].width, (double)target_right[0].height);
+				cout << "can init tracker" << endl;
+				Rect2d target_left_box((double) target_left[0].x,
+						(double) target_left[0].y,
+						(double) target_left[0].width,
+						(double) target_left[0].height);
+				Rect2d target_right_box((double) target_right[0].x,
+						(double) target_right[0].y,
+						(double) target_right[0].width,
+						(double) target_right[0].height);
 				if (!tracker_left->init(pic_left, target_left_box)) {
 					cout << "***Could not initialize left tracker...***\n";
 					left_detected = false;
@@ -165,40 +170,38 @@ int main(int argc, char **argv) {
 				Rect2d target_right_box;
 				if (tracker_left->update(pic_left, target_left_box)) {
 					//rectangle(image, target_left, Scalar(255, 0, 0), 2, 1);
-					if (!target_left.size() == 1) {	//if left no target, continue
-						left_detected = true;
-					} else {
-						left_detected = false;
-					}
+					left_detected = true;
+				} else {
+					left_detected = false;
 				}
 				if (tracker_right->update(pic_right, target_right_box)) {
 					//rectangle(image, target_left, Scalar(255, 0, 0), 2, 1);
-					if (!target_right.size() == 1) {
-						right_detected = true;
-					} else {
-						right_detected = false;
-					}
+					right_detected = true;
+				} else {
+					right_detected = false;
 				}
+
 				//imshow( "Tracking API", image );
 				//imshow("left",pic_left);
 				//imshow("right",pic_right);
 
 				//如果两边各有一个，认为是同一个
-				if (target_left.size() == 1 && target_right.size() == 1) {
+				if (left_detected &&right_detected) {
 					cout << "one target, and detected by two camera" << endl;
 
 					//提取target所在区域的特征点
 					orb->detect(pic_left_rect(target_left_box), keypoints_left);
-					orb->detect(pic_right_rect(target_right_box), keypoints_right);
+					orb->detect(pic_right_rect(target_right_box),
+							keypoints_right);
 
 					//将特征点坐标值加上目标框的坐标值，回归到整个图像的坐标
 					for (size_t i = 0; i < keypoints_left.size(); i++) {
 						keypoints_left[i].pt = keypoints_left[i].pt
-								+ Point2f(target_left[0].x, target_left[0].y);
+								+ Point2f(target_left_box.x, target_left_box.y);
 					}
 					for (size_t i = 0; i < keypoints_right.size(); i++) {
 						keypoints_right[i].pt = keypoints_right[i].pt
-								+ Point2f(target_right[0].x, target_right[0].y);
+								+ Point2f(target_right_box.x, target_right_box.y);
 					}
 					//在图像中计算描述子
 					orb->compute(pic_left, keypoints_left, desciptors_left);
@@ -223,15 +226,10 @@ int main(int argc, char **argv) {
 
 					//好的匹配点少，结束
 					if (good_matches.size() < 5) {
+
 						cout << "too small matches, use only left camera"
 								<< endl;
-						orb->detect(pic_left_rect(target_left[0]),
-								keypoints_left);
-						for (size_t i = 0; i < keypoints_left.size(); i++) {
-							keypoints_left[i].pt = keypoints_left[i].pt
-									+ Point2f(target_left[0].x,
-											target_left[0].y);
-						}
+						/*
 						vector<Point2d> pts_left;
 						for (auto k : keypoints_left) {
 							pts_left.push_back(pixel2cam(k.pt, stereo.K_l));
@@ -248,6 +246,7 @@ int main(int argc, char **argv) {
 						cout << "target 3d corrdinate:" << endl << x_left * 1000
 								<< "		" << y_left * 1000 << "		" << z_left
 								<< endl;
+						*/
 					} else {
 						//对好的匹配，把像素坐标映射到相机坐标系
 						vector<Point2d> pts_1, pts_2;
@@ -288,13 +287,13 @@ int main(int argc, char **argv) {
 					}
 				}
 				//如果只有左边检测到，给个可能的区域，物体在那个射线上
-				else if (target_left.size() == 1 && target_right.size() != 1) {
+				else if (left_detected && !right_detected) {//only left
 					cout
 							<< "left detect and right not detect, use only left camera";
-					orb->detect(pic_left_rect(target_left[0]), keypoints_left);
+					orb->detect(pic_left_rect(target_left_box), keypoints_left);
 					for (size_t i = 0; i < keypoints_left.size(); i++) {
 						keypoints_left[i].pt = keypoints_left[i].pt
-								+ Point2f(target_left[0].x, target_left[0].y);
+								+ Point2f(target_left_box.x, target_left_box.y);
 					}
 					vector<Point2d> pts_left;
 					for (auto k : keypoints_left) {
@@ -311,7 +310,7 @@ int main(int argc, char **argv) {
 
 					cout << "target 3d corrdinate:" << endl << x_left * 1000
 							<< "	" << y_left * 1000 << "	" << z_left << endl;
-				} else if(target_left.size() !=1 && target_right.size() != 1) {
+				} else if (!left_detected && !left_detected) {//no left and no right
 					cout << "no target，wait for next" << endl;
 				}
 			}
