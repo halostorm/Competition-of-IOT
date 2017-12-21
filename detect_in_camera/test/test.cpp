@@ -293,6 +293,7 @@ int main(int argc, char **argv) {
 				}
 				//如果只有左边检测到，给个可能的区域，物体在那个射线上
 				else if (left_detected && !right_detected) {		//only left
+					/*
 					cout
 							<< "left detect and right not detect, use only left camera";
 					orb->detect(pic_left_rect(target_left_box), keypoints_left);
@@ -315,10 +316,14 @@ int main(int argc, char **argv) {
 
 					cout << "target 3d corrdinate:" << endl << x_left * 1000
 							<< "	" << y_left * 1000 << "	" << z_left << endl;
+					*/
 					imshow("left", pic_left);
 					imshow("right", pic_right);
+
 				} else if (!left_detected && !left_detected) {//no left and no right
 					cout << "no target，wait for next" << endl;
+					imshow("left", pic_left);
+					imshow("right", pic_right);
 				}
 			}
 		} else {
