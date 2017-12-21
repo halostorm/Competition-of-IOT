@@ -143,9 +143,9 @@ int main(int argc, char **argv) {
 				right_detected = false;
 			}
 			if (!tracker_initialized && left_detected && right_detected) {//initializes the tracker//only do one time
-				target_left_box = ((double)target_left[0].x,(double)target_left[0].y,
+				target_left_box((double)target_left[0].x,(double)target_left[0].y,
 						(double)target_left[0].width, (double)target_left[0].height);
-				target_right_box = ((double)target_right[0].x,(double)target_right[0].y,
+				target_right_box((double)target_right[0].x,(double)target_right[0].y,
 						(double)target_right[0].width, (double)target_right[0].height);
 				if (!tracker_left->init(pic_left, target_left_box)) {
 					cout << "***Could not initialize left tracker...***\n";
