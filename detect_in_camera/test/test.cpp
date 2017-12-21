@@ -91,8 +91,8 @@ int main(int argc, char **argv) {
 	Mat pic_left, pic_right;
 	Mat pic_left_rect, pic_right_rect;
 	Mat gray_left, gray_right;
-	vector<Rect> target_left;
-	vector<Rect> target_right;
+	static vector<Rect> target_left;
+	static vector<Rect> target_right;
 	bool right_detected = false;	//detected flag;
 	bool left_detected = false;
 	bool tracker_initialized = false;	//
