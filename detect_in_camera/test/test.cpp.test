@@ -6,7 +6,7 @@ using namespace cv;
 
 int main(int argc, char** argv){
   // can change to BOOSTING, MIL, KCF (OpenCV 3.1), TLD, MEDIANFLOW, or GOTURN (OpenCV 3.2)
-  Ptr<Tracker> tracker = Tracker::create("MEDIANFLOW"); 
+  Ptr<Tracker> tracker = Tracker::create("KCF"); 
   VideoCapture video(0);
   if(!video.isOpened()){
     cerr << "cannot read video!" << endl;

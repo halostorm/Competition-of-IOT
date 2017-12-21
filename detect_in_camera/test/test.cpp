@@ -101,19 +101,24 @@ int main(int argc, char **argv) {
 	vector<KeyPoint> keypoints_left, keypoints_right;
 	Mat desciptors_left, descriptors_right;
 
-	Ptr<ORB> orb = ORB::create();
+	Ptr<ORB> orb = ORB::create(500);
 
 	vector<DMatch> matches;
 	BFMatcher matcher(NORM_HAMMING);
 
 	int loop = 0;
 	cout << "begin video" << endl;
+	clock_t start,finish;
+	start=clock();
+	finish=clock();
 	while (1) {
 		//视频流输入图片
 		cam_left >> pic_left;
 		cam_right >> pic_right;
 		//多少个周期一检测，视情况调整
 		if (loop % 10 == 0) {
+			cout << "time: "<<finish-start<< "/" << CLOCKS_PER_SEC << " (s) "<< endl;
+			start=clock();
 			loop = 0;
 			//先对图片做矫正
 			stereo.doRectifyL(pic_left, pic_left_rect);
@@ -326,6 +331,7 @@ int main(int argc, char **argv) {
 					imshow("right", pic_right);
 				}
 			}
+			finish = clock();
 		} else {
 			loop++;
 		}
