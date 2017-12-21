@@ -108,22 +108,12 @@ int main(int argc, char **argv)
 	    	equalizeHist(gray_left,gray_left);
 	    	cvtColor(pic_right_rect,gray_right,COLOR_BGR2GRAY);
 	    	equalizeHist(gray_right,gray_right);
-		//检测是否有目标
-	    	vector<Rect>target_left;
-	    	cascade.detectMultiScale(gray_left,target_left,1.1,2,0| CASCADE_SCALE_IMAGE, Size(30,30));
-	    	vector<Rect>target_right;
-	    	cascade.detectMultiScale(gray_right,target_right,1.1,2,0| CASCADE_SCALE_IMAGE, Size(30,30));
 
 	  //多少个周期一检测，视情况调整
 	  if(loop%10==0)
-	  {	
-		if(!initialized && target_left.size()!=0&&target_right.size()!=0)////put first detection result in tracker
-      		{	//检测是否有目标
-	    		vector<Rect>target_left;
-	    		cascade.detectMultiScale(gray_left,target_left,1.1,2,0| CASCADE_SCALE_IMAGE, Size(30,30));
-	    		vector<Rect>target_right;
-	    		cascade.detectMultiScale(gray_right,target_right,1.1,2,0| CASCADE_SCALE_IMAGE, Size(30,30));
-
+	  {	//put first detection result in tracker
+		if( !initialized && selectObject )
+      		{
        		 	//initializes the tracker
         		if( !tracker->init( frame, boundingBox ) )
         		{

@@ -1,0 +1,26 @@
+#include <opencv2/opencv.hpp>
+#include <opencv2/tracking.hpp>
+
+using namespace std;
+using namespace cv;
+
+int main(int argc, char** argv){
+  // can change to BOOSTING, MIL, KCF (OpenCV 3.1), TLD, MEDIANFLOW, or GOTURN (OpenCV 3.2)
+  Ptr<Tracker> tracker = Tracker::create("MEDIANFLOW"); 
+  VideoCapture video(0);
+  if(!video.isOpened()){
+    cerr << "cannot read video!" << endl;
+    return -1;
+  }
+  Mat frame;
+  video.read(frame);
+  Rect2d box(270, 120, 180, 260);
+  tracker->init(frame, box);
+  while(video.read(frame)){
+    tracker->update(frame, box);
+    rectangle(frame, box, Scalar(255, 0, 0), 2, 1);
+    imshow("Tracking", frame);
+    int k=waitKey(1);
+    if(k==27) break;
+  }
+}
