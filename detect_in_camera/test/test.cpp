@@ -122,14 +122,14 @@ int main(int argc, char **argv) {
 			if (!tracker_initialized) {
 				//检测是否有目标
 				//灰度化，均衡化
-				cvtColor(pic_left_rect, gray_left, COLOR_BGR2GRAY);
-				equalizeHist(gray_left, gray_left);
-				cvtColor(pic_right_rect, gray_right, COLOR_BGR2GRAY);
-				equalizeHist(gray_right, gray_right);
+				//cvtColor(pic_left_rect, gray_left, COLOR_BGR2GRAY);
+				//equalizeHist(gray_left, gray_left);
+				//cvtColor(pic_right_rect, gray_right, COLOR_BGR2GRAY);
+				//equalizeHist(gray_right, gray_right);
 
-				cascade.detectMultiScale(gray_left, target_left, 1.1, 2,
+				cascade.detectMultiScale(pic_left, target_left, 1.1, 2,
 						0 | CASCADE_SCALE_IMAGE, Size(30, 30));
-				cascade.detectMultiScale(gray_right, target_right, 1.1, 2,
+				cascade.detectMultiScale(pic_right, target_right, 1.1, 2,
 						0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 			}
 			if (target_left.size() == 1) {	//if left no target, continue
