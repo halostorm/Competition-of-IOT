@@ -113,8 +113,11 @@ int main(int argc, char **argv) {
 	finish=clock();
 	while (1) {
 		//视频流输入图片
+		start=clock();
 		cam_left >> pic_left;
 		cam_right >> pic_right;
+		finish=clock();
+		cout << "pic_time: "<<finish-start<< "/" << CLOCKS_PER_SEC << " (s) "<< endl;
 		//多少个周期一检测，视情况调整
 		if (loop % 10 == 0) {
 			cout << "time: "<<finish-start<< "/" << CLOCKS_PER_SEC << " (s) "<< endl;
