@@ -108,17 +108,18 @@ int main(int argc, char **argv) {
 
 	int loop = 0;
 	cout << "begin video" << endl;
-	clock_t start,finish;
-	start=clock();
-	finish=clock();
+	clock_t start, finish;
+	start = clock();
+	finish = clock();
 	while (1) {
 		//视频流输入图片
 		cam_left >> pic_left;
 		cam_right >> pic_right;
 		//多少个周期一检测，视情况调整
 		if (loop % 30 == 0) {
-			cout << "time: "<<(float)(finish-start)/CLOCKS_PER_SEC << " (s) "<< endl;
-			start=clock();
+			cout << "time: " << (float) (finish - start) / CLOCKS_PER_SEC
+					<< " (s) " << endl;
+			start = clock();
 			loop = 0;
 			//先对图片做矫正
 			stereo.doRectifyL(pic_left, pic_left_rect);
@@ -151,14 +152,20 @@ int main(int argc, char **argv) {
 			}
 			if (!tracker_initialized && left_detected && right_detected) {//initializes the tracker//only do one time
 				cout << "can init tracker" << endl;
-				Rect2d target_left_box((double) target_left[0].x,
-						(double) target_left[0].y,
-						(double) target_left[0].width,
-						(double) target_left[0].height);
-				Rect2d target_right_box((double) target_right[0].x,
-						(double) target_right[0].y,
-						(double) target_right[0].width,
-						(double) target_right[0].height);
+				/*
+				 Rect2d target_left_box((double) target_left[0].x,
+				 (double) target_left[0].y,
+				 (double) target_left[0].width,
+				 (double) target_left[0].height);
+				 Rect2d target_right_box((double) target_right[0].x,
+				 (double) target_right[0].y,
+				 (double) target_right[0].width,
+				 (double) target_right[0].height);
+				 */
+				Rect target_left_box(target_left[0].x, target_left[0].y,
+						target_left[0].width, target_left[0].height);
+				Rect target_right_box(target_right[0].x, target_right[0].y,
+						target_right[0].width, target_right[0].height);
 				if (!tracker_left->init(pic_left_rect, target_left_box)) {
 					cout << "***Could not initialize left tracker...***\n";
 					left_detected = false;
@@ -176,18 +183,18 @@ int main(int argc, char **argv) {
 				continue;
 			} else if (tracker_initialized) {
 				//updates the tracker
-				Rect2d target_left_box;
-				Rect2d target_right_box;
+				Rect target_left_box;
+				Rect target_right_box;
 				if (tracker_left->update(pic_left_rect, target_left_box)) {
-					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0), 2,
-							1);
+					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0),
+							2, 1);
 					left_detected = true;
 				} else {
 					left_detected = false;
 				}
 				if (tracker_right->update(pic_right_rect, target_right_box)) {
-					rectangle(pic_right_rect, target_right_box, Scalar(255, 0, 0), 2,
-							1);
+					rectangle(pic_right_rect, target_right_box,
+							Scalar(255, 0, 0), 2, 1);
 					right_detected = true;
 				} else {
 					right_detected = false;
@@ -217,7 +224,8 @@ int main(int argc, char **argv) {
 										target_right_box.y);
 					}
 					//在图像中计算描述子
-					orb->compute(pic_left_rect, keypoints_left, desciptors_left);
+					orb->compute(pic_left_rect, keypoints_left,
+							desciptors_left);
 					orb->compute(pic_right_rect, keypoints_right,
 							descriptors_right);
 					//imshow("left", pic_left_rect);
@@ -300,34 +308,34 @@ int main(int argc, char **argv) {
 					}
 				}
 				//如果只有左边检测到，给个可能的区域，物体在那个射线上
-				else if (left_detected && !right_detected) {//only left
-					cout << "left detect and right not detect, use only left camera";
+				else if (left_detected && !right_detected) {		//only left
+					cout
+							<< "left detect and right not detect, use only left camera";
 					/*
-					orb->detect(pic_left_rect(target_left_box), keypoints_left);
-					for (size_t i = 0; i < keypoints_left.size(); i++) {
-						keypoints_left[i].pt = keypoints_left[i].pt
-								+ Point2f(target_left_box.x, target_left_box.y);
-					}
-					vector<Point2d> pts_left;
-					for (auto k : keypoints_left) {
-						pts_left.push_back(pixel2cam(k.pt, stereo.K_l));
-					}
-					double x_left = 0, y_left = 0, z_left = 1000;
-					for (int i = 0; i < pts_left.size(); i++) {
-						x_left += pts_left[i].x;
-						y_left += pts_left[i].y;
+					 orb->detect(pic_left_rect(target_left_box), keypoints_left);
+					 for (size_t i = 0; i < keypoints_left.size(); i++) {
+					 keypoints_left[i].pt = keypoints_left[i].pt
+					 + Point2f(target_left_box.x, target_left_box.y);
+					 }
+					 vector<Point2d> pts_left;
+					 for (auto k : keypoints_left) {
+					 pts_left.push_back(pixel2cam(k.pt, stereo.K_l));
+					 }
+					 double x_left = 0, y_left = 0, z_left = 1000;
+					 for (int i = 0; i < pts_left.size(); i++) {
+					 x_left += pts_left[i].x;
+					 y_left += pts_left[i].y;
 
-					}
-					x_left /= pts_left.size();
-					y_left /= pts_left.size();
+					 }
+					 x_left /= pts_left.size();
+					 y_left /= pts_left.size();
 
-					cout << "target 3d corrdinate:" << endl << x_left * 1000
-							<< "	" << y_left * 1000 << "	" << z_left << endl;
-					*/
+					 cout << "target 3d corrdinate:" << endl << x_left * 1000
+					 << "	" << y_left * 1000 << "	" << z_left << endl;
+					 */
 					//imshow("left", pic_left_rect);
 					//imshow("right", pic_right_rect);
-
-				} else if (!left_detected && !right_detected) {//no left and no right
+				} else if (!left_detected && !right_detected) {	//no left and no right
 					cout << "no target，wait for next" << endl;
 					//imshow("left", pic_left_rect);
 					//imshow("right", pic_right_rect);
