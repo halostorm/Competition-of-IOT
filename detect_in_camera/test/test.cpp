@@ -183,16 +183,22 @@ int main(int argc, char **argv) {
 				continue;
 			} else if (tracker_initialized) {
 				//updates the tracker
+				Rect2d target_left_;
+				Rect2d target_right_;
 				Rect target_left_box;
 				Rect target_right_box;
-				if (tracker_left->update(pic_left_rect, target_left_box)) {
+				if (tracker_left->update(pic_left_rect, target_left_)) {
+					target_left_box((int)target_left_.x,(int)target_left_.y,
+							(int)target_left_.width,(int)target_left_.height);
 					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0),
 							2, 1);
 					left_detected = true;
 				} else {
 					left_detected = false;
 				}
-				if (tracker_right->update(pic_right_rect, target_right_box)) {
+				if (tracker_right->update(pic_right_rect, target_right_)) {
+					target_right_box((int)target_right_.x,(int)target_right_.y,
+												(int)target_right_.width,(int)target_right_.height);
 					rectangle(pic_right_rect, target_right_box,
 							Scalar(255, 0, 0), 2, 1);
 					right_detected = true;
