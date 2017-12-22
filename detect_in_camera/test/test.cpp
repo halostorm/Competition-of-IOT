@@ -162,17 +162,17 @@ int main(int argc, char **argv) {
 				 (double) target_right[0].width,
 				 (double) target_right[0].height);
 				 */
-				Rect2d target_left_box((double)target_left[0].x, (double)target_left[0].y,
+				Rect2d target_left_box1((double)target_left[0].x, (double)target_left[0].y,
 						(double)target_left[0].width, (double)target_left[0].height);
-				Rect2d target_right_box((double)target_right[0].x, (double)target_right[0].y,
+				Rect2d target_right_box1((double)target_right[0].x, (double)target_right[0].y,
 						(double)target_right[0].width, (double)target_right[0].height);
-				if (!tracker_left->init(pic_left_rect, target_left_box)) {
+				if (!tracker_left->init(pic_left_rect, target_left_box1)) {
 					cout << "***Could not initialize left tracker...***\n";
 					left_detected = false;
 					finish = clock();
 					continue;
 				}
-				if (!tracker_right->init(pic_right_rect, target_right_box)) {
+				if (!tracker_right->init(pic_right_rect, target_right_box1)) {
 					cout << "***Could not initialize right tracker...***\n";
 					right_detected = false;
 					finish = clock();
@@ -189,12 +189,13 @@ int main(int argc, char **argv) {
 
 				vector<Point2d> center_left;
 				vector<Point2d> center_right;
-
+				cout << "define center ok"<<endl;
 				if (tracker_left->update(pic_left_rect, target_left_box)) {
 					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0),
 							2, 1);
 					center_left[0].x=target_left_box.x + 0.5 * target_left_box.width;
 					center_left[0].y=target_left_box.y + 0.5 * target_left_box.height;
+					cout << "set left center ok"<<endl;
 					left_detected = true;
 				} else {
 					left_detected = false;
@@ -204,6 +205,7 @@ int main(int argc, char **argv) {
 							Scalar(255, 0, 0), 2, 1);
 					center_right[0].x=target_right_box.x + 0.5 * target_right_box.width;
 					center_right[0].y=target_right_box.y + 0.5 * target_right_box.height;
+					cout << "set right center ok"<<endl;
 					right_detected = true;
 				} else {
 					right_detected = false;
