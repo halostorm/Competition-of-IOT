@@ -162,10 +162,14 @@ int main(int argc, char **argv) {
 				 (double) target_right[0].width,
 				 (double) target_right[0].height);
 				 */
-				Rect2d target_left_box1((double)target_left[0].x, (double)target_left[0].y,
-						(double)target_left[0].width, (double)target_left[0].height);
-				Rect2d target_right_box1((double)target_right[0].x, (double)target_right[0].y,
-						(double)target_right[0].width, (double)target_right[0].height);
+				Rect2d target_left_box1((double) target_left[0].x,
+						(double) target_left[0].y,
+						(double) target_left[0].width,
+						(double) target_left[0].height);
+				Rect2d target_right_box1((double) target_right[0].x,
+						(double) target_right[0].y,
+						(double) target_right[0].width,
+						(double) target_right[0].height);
 				if (!tracker_left->init(pic_left_rect, target_left_box1)) {
 					cout << "***Could not initialize left tracker...***\n";
 					left_detected = false;
@@ -183,22 +187,23 @@ int main(int argc, char **argv) {
 				continue;
 			} else if (tracker_initialized) {
 				//updates the tracker
-				cout << "initialize tracker ok"<<endl;
+				cout << "initialize tracker ok" << endl;
 				Rect2d target_left_box;
 				Rect2d target_right_box;
 
 				vector<Point2d> center_left;
 				vector<Point2d> center_right;
-				cout << "define center ok"<<endl;
+				cout << "define center ok" << endl;
 				if (tracker_left->update(pic_left_rect, target_left_box)) {
 					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0),
 							2, 1);
-					cout << "begin center ok"<<endl;
-					Point2d temp(target_left_box.x + 0.5 * target_left_box.width,
-							target_left_box.y + 0.5 * target_left_box.height);
-					center_left[0]=temp;
+					cout << "begin center ok" << endl;
+					center_left[0].x = target_left_box.x
+							+ cvRound(target_left_box.width / 2.0);
+					center_left[0].y = target_left_box.y
+							+ cvRound(target_left_box.height / 2.0);
 
-					cout << "set left center ok"<<endl;
+					cout << "set left center ok" << endl;
 					left_detected = true;
 				} else {
 					left_detected = false;
@@ -207,15 +212,17 @@ int main(int argc, char **argv) {
 					rectangle(pic_right_rect, target_right_box,
 							Scalar(255, 0, 0), 2, 1);
 
-					center_right[0].x=target_right_box.x + 0.5 * target_right_box.width;
-					center_right[0].y=target_right_box.y + 0.5 * target_right_box.height;
+					center_right[0].x = target_right_box.x
+							+ cvRound(target_right_box.width / 2.0);
+					center_right[0].y = target_right_box.y
+							+ cvRound(target_right_box.height / 2.0);
 
-					cout << "set right center ok"<<endl;
+					cout << "set right center ok" << endl;
 					right_detected = true;
 				} else {
 					right_detected = false;
 				}
-				cout<<"can show"<<endl;
+				cout << "can show" << endl;
 				imshow("left", pic_left_rect);
 				imshow("right", pic_right_rect);
 				//如果两边各有一个，认为是同一个
