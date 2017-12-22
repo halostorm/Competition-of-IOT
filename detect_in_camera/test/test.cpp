@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
 	bool right_detected = false;	//detected flag;
 	bool left_detected = false;
 	bool tracker_initialized = false;	//
-	vector<KeyPoint> keypoints_left, keypoints_right;
+	//vector<KeyPoint> keypoints_left, keypoints_right;
 	Mat desciptors_left, descriptors_right;
 
 	Ptr<ORB> orb = ORB::create(500);
@@ -185,9 +185,16 @@ int main(int argc, char **argv) {
 				//updates the tracker
 				Rect2d target_left_box;
 				Rect2d target_right_box;
+
+				vector<Point2d> center_left;
+				vector<Point2d> center_right;
+
 				if (tracker_left->update(pic_left_rect, target_left_box)) {
 					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0),
 							2, 1);
+					center_left[0](
+							target_left_box.x + 0.5 * target_left_box.width,
+							target_left_box.y + 0.5 * target_left_box.height);
 					left_detected = true;
 				} else {
 					left_detected = false;
@@ -195,6 +202,9 @@ int main(int argc, char **argv) {
 				if (tracker_right->update(pic_right_rect, target_right_box)) {
 					rectangle(pic_right_rect, target_right_box,
 							Scalar(255, 0, 0), 2, 1);
+					center_right[0](
+							target_right_box.x + 0.5 * target_right_box.width,
+							target_right_box.y + 0.5 * target_right_box.height);
 					right_detected = true;
 				} else {
 					right_detected = false;
@@ -205,132 +215,108 @@ int main(int argc, char **argv) {
 				if (left_detected && right_detected) {
 					cout << "one target, and detected by two camera" << endl;
 					////////////////////////////////////坐标相关
-					/*
+
 					//提取target所在区域的特征点
-					orb->detect(pic_left_rect(target_left_box), keypoints_left);
-					orb->detect(pic_right_rect(target_right_box),
-							keypoints_right);
+					//orb->detect(pic_left_rect(target_left_box), keypoints_left);
+					//orb->detect(pic_right_rect(target_right_box),
+					//		keypoints_right);
 
 					//将特征点坐标值加上目标框的坐标值，回归到整个图像的坐标
-					for (size_t i = 0; i < keypoints_left.size(); i++) {
-						keypoints_left[i].pt = keypoints_left[i].pt
-								+ Point2f(target_left_box.x, target_left_box.y);
-					}
-					for (size_t i = 0; i < keypoints_right.size(); i++) {
-						keypoints_right[i].pt = keypoints_right[i].pt
-								+ Point2f(target_right_box.x,
-										target_right_box.y);
-					}
+					//for (size_t i = 0; i < keypoints_left.size(); i++) {
+					//	keypoints_left[i].pt = keypoints_left[i].pt
+					//			+ Point2f(target_left_box.x, target_left_box.y);
+					//}
+					//for (size_t i = 0; i < keypoints_right.size(); i++) {
+					//	keypoints_right[i].pt = keypoints_right[i].pt
+					//			+ Point2f(target_right_box.x,
+					//					target_right_box.y);
+					//}
 					//在图像中计算描述子
-					orb->compute(pic_left_rect, keypoints_left,
-							desciptors_left);
-					orb->compute(pic_right_rect, keypoints_right,
-							descriptors_right);
+					//orb->compute(pic_left_rect, keypoints_left,
+					//		desciptors_left);
+					//orb->compute(pic_right_rect, keypoints_right,
+					//		descriptors_right);
 
 					//对特征点进行匹配
-					matcher.match(desciptors_left, descriptors_right, matches);
+					//matcher.match(desciptors_left, descriptors_right, matches);
 
-					double max_dist = 0;
-					for (size_t i = 0; i < desciptors_left.rows; i++) {
-						double dist = matches[i].distance;
-						if (dist > max_dist)
-							max_dist = dist;
-					}
+					//double max_dist = 0;
+					//for (size_t i = 0; i < desciptors_left.rows; i++) {
+					//	double dist = matches[i].distance;
+					//	if (dist > max_dist)
+					//		max_dist = dist;
+					//}
 					//选取好的匹配
-					vector<DMatch> good_matches;
-					for (size_t i = 0; i < desciptors_left.rows; i++) {
-						if (matches[i].distance <= 0.5 * max_dist)
-							good_matches.push_back(matches[i]);
-					}
+					//vector<DMatch> good_matches;
+					//for (size_t i = 0; i < desciptors_left.rows; i++) {
+					//	if (matches[i].distance <= 0.5 * max_dist)
+					//		good_matches.push_back(matches[i]);
+					//}
 
-					//好的匹配点少，结束
-					if (good_matches.size() < 5) {
-						cout << "too small matches, use only left camera"
-								<< endl;
+					////好的匹配点少，结束
+					//if (good_matches.size() < 5) {
+					//	cout << "too small matches, use only left camera"
+					//			<< endl;
 
-						 vector<Point2d> pts_left;
-						 for (auto k : keypoints_left) {
-						 pts_left.push_back(pixel2cam(k.pt, stereo.K_l));
-						 }
-						 double x_left = 0, y_left = 0, z_left = 1000;
-						 for (int i = 0; i < pts_left.size(); i++) {
-						 x_left += pts_left[i].x;
-						 y_left += pts_left[i].y;
+					//	vector<Point2d> pts_left;
+					//	for (auto k : keypoints_left) {
 
-						 }
-						 x_left /= pts_left.size();
-						 y_left /= pts_left.size();
+					//对好的匹配，把像素坐标映射到相机坐标系
+					//vector<Point2d> pts_1, pts_2;
+					//for (DMatch m : good_matches) {
+					//	pts_1.push_back(
+					//			pixel2cam(keypoints_left[m.queryIdx].pt,
+					//stereo.K_l
+					//));
+					//	pts_2.push_back(
+					//			pixel2cam(keypoints_right[m.trainIdx].pt,
+					//					stereo.K_r));
+					//}
+					//opencv里自带的算3d坐标的函数，计算匹配点对在左相机坐标系下的3d坐标（不是归一化的，是齐次坐标系）
+					Mat pts_4d;
+					triangulatePoints(T1, T2, center_left, center_right,
+							pts_4d);
+					//齐次的转化为非其次的
+					vector<Point3d> points;
+					Mat x = pts_4d.col(0);
+					x /= x.at<double>(3, 0);
+					Point3d p(x.at<double>(0, 0), x.at<double>(1, 0),
+							x.at<double>(2, 0));
+					points.push_back(p);
 
-						 cout << "target 3d corrdinate:" << endl << x_left * 1000
-						 << "		" << y_left * 1000 << "		" << z_left
-						 << endl;
-
-					} else {
-						//对好的匹配，把像素坐标映射到相机坐标系
-						vector<Point2d> pts_1, pts_2;
-						for (DMatch m : good_matches) {
-							pts_1.push_back(
-									pixel2cam(keypoints_left[m.queryIdx].pt,
-											stereo.K_l));
-							pts_2.push_back(
-									pixel2cam(keypoints_right[m.trainIdx].pt,
-											stereo.K_r));
-						}
-						//opencv里自带的算3d坐标的函数，计算匹配点对在左相机坐标系下的3d坐标（不是归一化的，是齐次坐标系）
-						Mat pts_4d;
-						triangulatePoints(T1, T2, pts_1, pts_2, pts_4d);
-						//齐次的转化为非其次的
-						vector<Point3d> points;
-						for (int i = 0; i < pts_4d.cols; i++) {
-							Mat x = pts_4d.col(i);
-							x /= x.at<double>(3, 0);
-							Point3d p(x.at<double>(0, 0), x.at<double>(1, 0),
-									x.at<double>(2, 0));
-							points.push_back(p);
-						}
-
-						//对计算的物体特征点求均值，视为物体3d坐标
-						double x_left = 0, y_left = 0, z_left = 0;
-						for (int i = 0; i < points.size(); i++) {
-							x_left += points[i].x;
-							y_left += points[i].y;
-							z_left += points[i].z;
-						}
-						x_left /= points.size();
-						y_left /= points.size();
-						z_left /= points.size();
-						cout << "target 3d corrdinate:" << endl << x_left << "	"
-								<< y_left << "	" << z_left << endl;
-						cout << endl;
-					}
-					*//////////////////////坐标相关
+					//对计算的物体特征点求均值，视为物体3d坐标
+					double x_left = 0, y_left = 0, z_left = 0;
+					x_left = points[0].x;
+					y_left = points[0].y;
+					z_left = points[0].z;
+					//for (int i = 0; i < points.size(); i++) {
+					//	x_left += points[i].x;
+					//	y_left += points[i].y;
+					//	z_left += points[i].z;
+					//}
+					//x_left /= points.size();
+					//y_left /= points.size();
+					//z_left /= points.size();
+					cout << "target 3d corrdinate:" << endl << x_left << "	"
+							<< y_left << "	" << z_left << endl;
+					cout << endl;
+					/////////////////////坐标相关
 				}
 				//如果只有左边检测到，给个可能的区域，物体在那个射线上
 				else if (left_detected && !right_detected) {		//only left
 					cout
-							<< "left detect and right not detect, use only left camera";
-					/*
-					 orb->detect(pic_left_rect(target_left_box), keypoints_left);
-					 for (size_t i = 0; i < keypoints_left.size(); i++) {
-					 keypoints_left[i].pt = keypoints_left[i].pt
-					 + Point2f(target_left_box.x, target_left_box.y);
-					 }
-					 vector<Point2d> pts_left;
-					 for (auto k : keypoints_left) {
-					 pts_left.push_back(pixel2cam(k.pt, stereo.K_l));
-					 }
-					 double x_left = 0, y_left = 0, z_left = 1000;
-					 for (int i = 0; i < pts_left.size(); i++) {
-					 x_left += pts_left[i].x;
-					 y_left += pts_left[i].y;
+							<< "left detect and right not detect, use only left camera"
+							<< endl;
 
-					 }
-					 x_left /= pts_left.size();
-					 y_left /= pts_left.size();
+					center_left.push_back(
+							pixel2cam(center_left[0], stereo.K_l));
+					double x_left = 0, y_left = 0, z_left = 1000;
+					x_left = center_left[0].x;
+					y_left = center_left[0].y;
 
-					 cout << "target 3d corrdinate:" << endl << x_left * 1000
-					 << "	" << y_left * 1000 << "	" << z_left << endl;
-					 */
+					cout << "target 3d corrdinate:" << endl << x_left * 1000
+							<< "		" << y_left * 1000 << "		" << z_left << endl;
+
 				} else if (!left_detected && !right_detected) {	//no left and no right
 					cout << "no target，wait for next" << endl;
 				}
