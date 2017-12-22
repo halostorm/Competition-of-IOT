@@ -133,9 +133,9 @@ int main(int argc, char **argv) {
 				//cvtColor(pic_right_rect, gray_right, COLOR_BGR2GRAY);
 				//equalizeHist(gray_right, gray_right);
 
-				cascade.detectMultiScale(pic_left, target_left, 1.1, 2,
+				cascade.detectMultiScale(pic_left_rect, target_left, 1.1, 2,
 						0 | CASCADE_SCALE_IMAGE, Size(30, 30));
-				cascade.detectMultiScale(pic_right, target_right, 1.1, 2,
+				cascade.detectMultiScale(pic_right_rect, target_right, 1.1, 2,
 						0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 			}
 			if (target_left.size() == 1) {	//if left no target, continue
@@ -159,12 +159,12 @@ int main(int argc, char **argv) {
 						(double) target_right[0].y,
 						(double) target_right[0].width,
 						(double) target_right[0].height);
-				if (!tracker_left->init(pic_left, target_left_box)) {
+				if (!tracker_left->init(pic_left_rect, target_left_box)) {
 					cout << "***Could not initialize left tracker...***\n";
 					left_detected = false;
 					continue;
 				}
-				if (!tracker_right->init(pic_right, target_right_box)) {
+				if (!tracker_right->init(pic_right_rect, target_right_box)) {
 					cout << "***Could not initialize right tracker...***\n";
 					right_detected = false;
 					continue;
@@ -175,14 +175,14 @@ int main(int argc, char **argv) {
 				//updates the tracker
 				Rect2d target_left_box;
 				Rect2d target_right_box;
-				if (tracker_left->update(pic_left, target_left_box)) {
+				if (tracker_left->update(pic_left_rect, target_left_box)) {
 					rectangle(pic_left, target_left_box, Scalar(255, 0, 0), 2,
 							1);
 					left_detected = true;
 				} else {
 					left_detected = false;
 				}
-				if (tracker_right->update(pic_right, target_right_box)) {
+				if (tracker_right->update(pic_right_rect, target_right_box)) {
 					rectangle(pic_right, target_right_box, Scalar(255, 0, 0), 2,
 							1);
 					right_detected = true;
@@ -214,11 +214,11 @@ int main(int argc, char **argv) {
 										target_right_box.y);
 					}
 					//在图像中计算描述子
-					orb->compute(pic_left, keypoints_left, desciptors_left);
+					orb->compute(pic_left_rect, keypoints_left, desciptors_left);
 					orb->compute(pic_right_rect, keypoints_right,
 							descriptors_right);
-					imshow("left", pic_left);
-					imshow("right", pic_right);
+					imshow("left", pic_left_rect);
+					imshow("right", pic_right_rect);
 					//对特征点进行匹配
 					matcher.match(desciptors_left, descriptors_right, matches);
 
@@ -323,13 +323,13 @@ int main(int argc, char **argv) {
 					cout << "target 3d corrdinate:" << endl << x_left * 1000
 							<< "	" << y_left * 1000 << "	" << z_left << endl;
 					*/
-					imshow("left", pic_left);
-					imshow("right", pic_right);
+					imshow("left", pic_left_rect);
+					imshow("right", pic_right_rect);
 
-				} else if (!left_detected && !left_detected) {//no left and no right
+				} else if (!left_detected && !right_detected) {//no left and no right
 					cout << "no target，wait for next" << endl;
-					imshow("left", pic_left);
-					imshow("right", pic_right);
+					imshow("left", pic_left_rect);
+					imshow("right", pic_right_rect);
 				}
 			}
 			finish = clock();
