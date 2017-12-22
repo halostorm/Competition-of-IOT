@@ -199,15 +199,13 @@ int main(int argc, char **argv) {
 				} else {
 					right_detected = false;
 				}
-
-				//imshow( "Tracking API", image );
-				//imshow("left",pic_left);
-				//imshow("right",pic_right);
-
+				imshow("left", pic_left_rect);
+				imshow("right", pic_right_rect);
 				//如果两边各有一个，认为是同一个
 				if (left_detected && right_detected) {
 					cout << "one target, and detected by two camera" << endl;
-
+					////////////////////////////////////坐标相关
+					/*
 					//提取target所在区域的特征点
 					orb->detect(pic_left_rect(target_left_box), keypoints_left);
 					orb->detect(pic_right_rect(target_right_box),
@@ -228,8 +226,7 @@ int main(int argc, char **argv) {
 							desciptors_left);
 					orb->compute(pic_right_rect, keypoints_right,
 							descriptors_right);
-					//imshow("left", pic_left_rect);
-					//imshow("right", pic_right_rect);
+
 					//对特征点进行匹配
 					matcher.match(desciptors_left, descriptors_right, matches);
 
@@ -250,7 +247,7 @@ int main(int argc, char **argv) {
 					if (good_matches.size() < 5) {
 						cout << "too small matches, use only left camera"
 								<< endl;
-						/*
+
 						 vector<Point2d> pts_left;
 						 for (auto k : keypoints_left) {
 						 pts_left.push_back(pixel2cam(k.pt, stereo.K_l));
@@ -267,7 +264,7 @@ int main(int argc, char **argv) {
 						 cout << "target 3d corrdinate:" << endl << x_left * 1000
 						 << "		" << y_left * 1000 << "		" << z_left
 						 << endl;
-						 */
+
 					} else {
 						//对好的匹配，把像素坐标映射到相机坐标系
 						vector<Point2d> pts_1, pts_2;
@@ -306,6 +303,7 @@ int main(int argc, char **argv) {
 								<< y_left << "	" << z_left << endl;
 						cout << endl;
 					}
+					*//////////////////////坐标相关
 				}
 				//如果只有左边检测到，给个可能的区域，物体在那个射线上
 				else if (left_detected && !right_detected) {		//only left
@@ -333,12 +331,8 @@ int main(int argc, char **argv) {
 					 cout << "target 3d corrdinate:" << endl << x_left * 1000
 					 << "	" << y_left * 1000 << "	" << z_left << endl;
 					 */
-					//imshow("left", pic_left_rect);
-					//imshow("right", pic_right_rect);
 				} else if (!left_detected && !right_detected) {	//no left and no right
 					cout << "no target，wait for next" << endl;
-					//imshow("left", pic_left_rect);
-					//imshow("right", pic_right_rect);
 				}
 			}
 			finish = clock();
