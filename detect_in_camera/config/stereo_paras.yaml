@@ -5,43 +5,43 @@
 # Stereo Rectification. Only if you need to pre-rectify the images.
 # Camera.fx, .fy, etc must be the same as in LEFT.P
 #--------------------------------------------------------------------------------------------
-LEFT.height: 1080
-LEFT.width: 1920
+LEFT.height: 240
+LEFT.width: 320
 LEFT.D: !!opencv-matrix
    rows: 1
    cols: 5
    dt: d
-   data: [-0.0237, 0.0636, -0.00094432, 0.0017, -0.0506]
+   data: [-0.0047, 0.1735, 0.0058, 0.0051, -0.3301]
 LEFT.K: !!opencv-matrix
    rows: 3
    cols: 3
    dt: d
-   data: [1038.7172, 0.4162, 994.1074, 0.0, 1040.0767, 522.3307, 0.0, 0.0, 1.0]
+   data: [177.0648, 0.2860, 171.6758, 0.0, 235.9113, 129.4879, 0.0, 0.0, 1.0]
 
 
-RIGHT.height: 1080
-RIGHT.width: 1920
+RIGHT.height: 240
+RIGHT.width: 320
 RIGHT.D: !!opencv-matrix
    rows: 1
    cols: 5
    dt: d
-   data: [-0.0483, 0.1215, 0.0000816, 0.0025, -0.0896]
+   data: [-0.0044, 0.1075, 0.0047, 0.0014, -0.1063]
 RIGHT.K: !!opencv-matrix
    rows: 3
    cols: 3
    dt: d
-   data: [1035.962, -1.6764, 957.9608, 0.0, 1034.643, 528.2544, 0.0, 0.0, 1]
+   data: [176.6538, 0.0684, 159.2211, 0.0, 235.3501, 108.2461, 0.0, 0.0, 1]
 
 
 LEFT2RIGHT.R: !!opencv-matrix
    rows: 3
    cols: 3
    dt: d
-   data: [0.9995, 0.0043, 0.0298, -0.0042, 1.0000, -0.0031, -0.0298, 0.0030, 0.9996]
+   data: [0.9988, 0.00083888, -0.0489, -0.0021, 0.9997, -0.0257, 0.0488, 0.0258, 0.9985]
    
 LEFT2RIGHT.T: !!opencv-matrix
    rows: 3
    cols: 1
    dt: d
-   data: [-690.3518, 36.7139, -63.3990]
+   data: [-97.8850, 3.4232, -0.9254]
 
