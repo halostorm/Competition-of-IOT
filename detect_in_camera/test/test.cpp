@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
 	//init values
 	Mat pic_left, pic_right;
 	Mat pic_left_rect, pic_right_rect;
-	Mat gray_left, gray_right;
+	//Mat gray_left, gray_right;
 	vector<Rect> target_left;
 	vector<Rect> target_right;
 	//Rect2d target_left_box;
@@ -99,12 +99,12 @@ int main(int argc, char **argv) {
 	bool left_detected = false;
 	bool tracker_initialized = false;	//
 	//vector<KeyPoint> keypoints_left, keypoints_right;
-	Mat desciptors_left, descriptors_right;
+	//Mat desciptors_left, descriptors_right;
 
-	Ptr<ORB> orb = ORB::create(500);
+	//Ptr<ORB> orb = ORB::create(500);
 
-	vector<DMatch> matches;
-	BFMatcher matcher(NORM_HAMMING);
+	//vector<DMatch> matches;
+	//BFMatcher matcher(NORM_HAMMING);
 
 	int loop = 0;
 	cout << "begin video" << endl;
@@ -162,10 +162,10 @@ int main(int argc, char **argv) {
 				 (double) target_right[0].width,
 				 (double) target_right[0].height);
 				 */
-				Rect target_left_box(target_left[0].x, target_left[0].y,
-						target_left[0].width, target_left[0].height);
-				Rect target_right_box(target_right[0].x, target_right[0].y,
-						target_right[0].width, target_right[0].height);
+				Rect2d target_left_box((double)target_left[0].x, (double)target_left[0].y,
+						(double)target_left[0].width, (double)target_left[0].height);
+				Rect2d target_right_box((double)target_right[0].x, (double)target_right[0].y,
+						(double)target_right[0].width, (double)target_right[0].height);
 				if (!tracker_left->init(pic_left_rect, target_left_box)) {
 					cout << "***Could not initialize left tracker...***\n";
 					left_detected = false;
@@ -183,6 +183,7 @@ int main(int argc, char **argv) {
 				continue;
 			} else if (tracker_initialized) {
 				//updates the tracker
+				cout << "initialize tracker ok"<<endl;
 				Rect2d target_left_box;
 				Rect2d target_right_box;
 
