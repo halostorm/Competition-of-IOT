@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
 		cam_right >> pic_right;
 		//多少个周期一检测，视情况调整
 		if (loop % 30 == 0) {
-			cout << "time: "<<finish-start<< "/" << CLOCKS_PER_SEC << " (s) "<< endl;
+			cout << "time: "<<(float)(finish-start)/CLOCKS_PER_SEC << " (s) "<< endl;
 			start=clock();
 			loop = 0;
 			//先对图片做矫正
@@ -141,6 +141,7 @@ int main(int argc, char **argv) {
 				left_detected = true;
 			} else {
 				left_detected = false;
+				finish = clock();
 				continue;
 			}
 			if (target_right.size() == 1) {
@@ -161,14 +162,17 @@ int main(int argc, char **argv) {
 				if (!tracker_left->init(pic_left_rect, target_left_box)) {
 					cout << "***Could not initialize left tracker...***\n";
 					left_detected = false;
+					finish = clock();
 					continue;
 				}
 				if (!tracker_right->init(pic_right_rect, target_right_box)) {
 					cout << "***Could not initialize right tracker...***\n";
 					right_detected = false;
+					finish = clock();
 					continue;
 				}
 				tracker_initialized = true;
+				finish = clock();
 				continue;
 			} else if (tracker_initialized) {
 				//updates the tracker
