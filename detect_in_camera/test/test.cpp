@@ -191,16 +191,15 @@ int main(int argc, char **argv) {
 				Rect2d target_left_box;
 				Rect2d target_right_box;
 
-				vector<Point2d> center_left;
-				vector<Point2d> center_right;
+				Point2d center_left;
+				Point2d center_right;
 				cout << "define center ok" << endl;
 				if (tracker_left->update(pic_left_rect, target_left_box)) {
 					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0),
 							2, 1);
 					cout << "begin center ok" << endl;
-					center_left.vector(target_left_box.x
-							+ cvRound(target_left_box.width / 2.0),target_left_box.y
-							+ cvRound(target_left_box.height / 2.0));
+					center_left.x=target_left_box.x + cvRound(target_left_box.width / 2.0);
+					center_left.y=target_left_box.y+ cvRound(target_left_box.height / 2.0);
 
 					cout << "set left center ok" << endl;
 					left_detected = true;
@@ -211,9 +210,9 @@ int main(int argc, char **argv) {
 					rectangle(pic_right_rect, target_right_box,
 							Scalar(255, 0, 0), 2, 1);
 
-					center_right[0].x = target_right_box.x
+					center_right.x = target_right_box.x
 							+ cvRound(target_right_box.width / 2.0);
-					center_right[0].y = target_right_box.y
+					center_right.y = target_right_box.y
 							+ cvRound(target_right_box.height / 2.0);
 
 					cout << "set right center ok" << endl;
@@ -287,7 +286,9 @@ int main(int argc, char **argv) {
 					//}
 					//opencv里自带的算3d坐标的函数，计算匹配点对在左相机坐标系下的3d坐标（不是归一化的，是齐次坐标系）
 					Mat pts_4d;
-					triangulatePoints(T1, T2, center_left, center_right,
+					vector<Point2d> c_right(center_right);
+					vector<Point2d> c_left(center_left);
+					triangulatePoints(T1, T2, c_left, c_right,
 							pts_4d);
 					//齐次的转化为非其次的
 					vector<Point3d> points;
@@ -320,12 +321,12 @@ int main(int argc, char **argv) {
 					cout
 							<< "left detect and right not detect, use only left camera"
 							<< endl;
-
-					center_left.push_back(
-							pixel2cam(center_left[0], stereo.K_l));
+					vector<Point2d> c_left(center_left);
+					c_left.push_back(
+							pixel2cam(center_left, stereo.K_l));
 					double x_left = 0, y_left = 0, z_left = 1000;
-					x_left = center_left[0].x;
-					y_left = center_left[0].y;
+					x_left = c_left[0].x;
+					y_left = c_left[0].y;
 
 					cout << "target 3d corrdinate:" << endl << x_left * 1000
 							<< "		" << y_left * 1000 << "		" << z_left << endl;
