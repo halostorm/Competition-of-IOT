@@ -116,7 +116,7 @@ int main(int argc, char **argv) {
 		cam_left >> pic_left;
 		cam_right >> pic_right;
 		//多少个周期一检测，视情况调整
-		if (loop % 10 == 0) {
+		if (loop % 30 == 0) {
 			cout << "time: "<<finish-start<< "/" << CLOCKS_PER_SEC << " (s) "<< endl;
 			start=clock();
 			loop = 0;
@@ -297,10 +297,9 @@ int main(int argc, char **argv) {
 					}
 				}
 				//如果只有左边检测到，给个可能的区域，物体在那个射线上
-				else if (left_detected && !right_detected) {		//only left
+				else if (left_detected && !right_detected) {//only left
+					cout << "left detect and right not detect, use only left camera";
 					/*
-					cout
-							<< "left detect and right not detect, use only left camera";
 					orb->detect(pic_left_rect(target_left_box), keypoints_left);
 					for (size_t i = 0; i < keypoints_left.size(); i++) {
 						keypoints_left[i].pt = keypoints_left[i].pt
