@@ -193,6 +193,7 @@ int main(int argc, char **argv) {
 				if (tracker_left->update(pic_left_rect, target_left_box)) {
 					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0),
 							2, 1);
+					cout << "begin center ok"<<endl;
 					center_left[0].x=target_left_box.x + 0.5 * target_left_box.width;
 					center_left[0].y=target_left_box.y + 0.5 * target_left_box.height;
 					cout << "set left center ok"<<endl;
