@@ -183,7 +183,7 @@ int main(int argc, char **argv) {
 					left_detected = false;
 				}
 				if (tracker_right->update(pic_right_rect, target_right_box)) {
-					rectangle(pic_left_rect, target_right_box, Scalar(255, 0, 0), 2,
+					rectangle(pic_right_rect, target_right_box, Scalar(255, 0, 0), 2,
 							1);
 					right_detected = true;
 				} else {
