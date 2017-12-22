@@ -191,8 +191,8 @@ int main(int argc, char **argv) {
 				Rect2d target_left_box;
 				Rect2d target_right_box;
 
-				vector<Point2d> center_left;
-				vector<Point2d> center_right;
+				vector<Point2d> center_left= vector();
+				vector<Point2d> center_right=vector();
 				cout << "define center ok" << endl;
 				if (tracker_left->update(pic_left_rect, target_left_box)) {
 					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0),
