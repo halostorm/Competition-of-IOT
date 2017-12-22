@@ -220,8 +220,8 @@ int main(int argc, char **argv) {
 					orb->compute(pic_left_rect, keypoints_left, desciptors_left);
 					orb->compute(pic_right_rect, keypoints_right,
 							descriptors_right);
-					imshow("left", pic_left_rect);
-					imshow("right", pic_right_rect);
+					//imshow("left", pic_left_rect);
+					//imshow("right", pic_right_rect);
 					//对特征点进行匹配
 					matcher.match(desciptors_left, descriptors_right, matches);
 
@@ -240,7 +240,6 @@ int main(int argc, char **argv) {
 
 					//好的匹配点少，结束
 					if (good_matches.size() < 5) {
-
 						cout << "too small matches, use only left camera"
 								<< endl;
 						/*
@@ -325,13 +324,13 @@ int main(int argc, char **argv) {
 					cout << "target 3d corrdinate:" << endl << x_left * 1000
 							<< "	" << y_left * 1000 << "	" << z_left << endl;
 					*/
-					imshow("left", pic_left_rect);
-					imshow("right", pic_right_rect);
+					//imshow("left", pic_left_rect);
+					//imshow("right", pic_right_rect);
 
 				} else if (!left_detected && !right_detected) {//no left and no right
 					cout << "no target，wait for next" << endl;
-					imshow("left", pic_left_rect);
-					imshow("right", pic_right_rect);
+					//imshow("left", pic_left_rect);
+					//imshow("right", pic_right_rect);
 				}
 			}
 			finish = clock();
