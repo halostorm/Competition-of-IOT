@@ -207,6 +207,7 @@ int main(int argc, char **argv) {
 				} else {
 					right_detected = false;
 				}
+				cout<<"can show"<<endl;
 				imshow("left", pic_left_rect);
 				imshow("right", pic_right_rect);
 				//如果两边各有一个，认为是同一个
