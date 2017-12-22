@@ -188,18 +188,20 @@ int main(int argc, char **argv) {
 				Rect target_left_box;
 				Rect target_right_box;
 				if (tracker_left->update(pic_left_rect, target_left_)) {
-					target_left_box((int)target_left_.x,(int)target_left_.y,
+					Rect target_left_box1((int)target_left_.x,(int)target_left_.y,
 							(int)target_left_.width,(int)target_left_.height);
-					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0),
+					target_left_box = target_left_box1;
+					rectangle(pic_left_rect, target_left_box1, Scalar(255, 0, 0),
 							2, 1);
 					left_detected = true;
 				} else {
 					left_detected = false;
 				}
 				if (tracker_right->update(pic_right_rect, target_right_)) {
-					target_right_box((int)target_right_.x,(int)target_right_.y,
+					Rect target_right_box1((int)target_right_.x,(int)target_right_.y,
 												(int)target_right_.width,(int)target_right_.height);
-					rectangle(pic_right_rect, target_right_box,
+					target_right_box = target_right_box1;
+					rectangle(pic_right_rect, target_right_box1,
 							Scalar(255, 0, 0), 2, 1);
 					right_detected = true;
 				} else {
