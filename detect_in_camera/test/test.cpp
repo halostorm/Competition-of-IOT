@@ -286,8 +286,8 @@ int main(int argc, char **argv) {
 					//}
 					//opencv里自带的算3d坐标的函数，计算匹配点对在左相机坐标系下的3d坐标（不是归一化的，是齐次坐标系）
 					Mat pts_4d;
-					vector<Point2d> c_right(center_right);
-					vector<Point2d> c_left(center_left);
+					vector<Point2d> c_right;
+					vector<Point2d> c_left;
 					triangulatePoints(T1, T2, c_left, c_right,
 							pts_4d);
 					//齐次的转化为非其次的
@@ -321,7 +321,7 @@ int main(int argc, char **argv) {
 					cout
 							<< "left detect and right not detect, use only left camera"
 							<< endl;
-					vector<Point2d> c_left(center_left);
+					vector<Point2d> c_left;
 					c_left.push_back(
 							pixel2cam(center_left, stereo.K_l));
 					double x_left = 0, y_left = 0, z_left = 1000;
