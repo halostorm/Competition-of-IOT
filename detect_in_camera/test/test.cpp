@@ -194,10 +194,10 @@ int main(int argc, char **argv) {
 					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0),
 							2, 1);
 					cout << "begin center ok"<<endl;
-					double width = target_left_box.x + 0.5 * target_left_box.width;
-					center_left[0].x=width;
-					double height = target_left_box.y + 0.5 * target_left_box.height;
-					center_left[0].y=height;
+					Point2d temp(target_left_box.x + 0.5 * target_left_box.width,
+							target_left_box.y + 0.5 * target_left_box.height);
+					center_left[0]=temp;
+
 					cout << "set left center ok"<<endl;
 					left_detected = true;
 				} else {
@@ -206,10 +206,10 @@ int main(int argc, char **argv) {
 				if (tracker_right->update(pic_right_rect, target_right_box)) {
 					rectangle(pic_right_rect, target_right_box,
 							Scalar(255, 0, 0), 2, 1);
-					double width = target_right_box.x + 0.5 * target_right_box.width;
-					center_right[0].x=width;
-					double height = target_right_box.y + 0.5 * target_right_box.height;
-					center_right[0].y=height;
+
+					center_right[0].x=target_right_box.x + 0.5 * target_right_box.width;
+					center_right[0].y=target_right_box.y + 0.5 * target_right_box.height;
+
 					cout << "set right center ok"<<endl;
 					right_detected = true;
 				} else {
