@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
 		cam_left >> pic_left;
 		cam_right >> pic_right;
 		//多少个周期一检测，视情况调整
-		if (outside_loop % 1200 == 0) {
+		if (outside_loop % 120 == 0) {
 			outside_loop = 0;
 			tracker_initialized = false;
 		}
