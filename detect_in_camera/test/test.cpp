@@ -21,17 +21,8 @@ int main(int argc, char **argv) {
 	//init tracker//////////////////
 	String tracker_algorithm = "KCF";
 	//String video_name = parser.get<String>( 1 );
-	Ptr<Tracker> tracker_left = Tracker::create(tracker_algorithm);
-	Ptr<Tracker> tracker_right = Tracker::create(tracker_algorithm);
-	if (tracker_left == NULL) {
-		cout << "***Error in the instantiation of the left tracker...***\n";
-		return -1;
-	}
-	if (tracker_right == NULL) {
-		cout << "***Error in the instantiation of the right tracker...***\n";
-		return -1;
-	}
-
+	Ptr<Tracker> tracker_left;
+	Ptr<Tracker> tracker_right;
 	//init camera,0-left/1-right
 	VideoCapture cam_left(0);
 	VideoCapture cam_right(1);
@@ -120,6 +111,18 @@ int main(int argc, char **argv) {
 		if (outside_loop % 120 == 0) {
 			outside_loop = 0;
 			tracker_initialized = false;
+			tracker_left = Tracker::create(tracker_algorithm);
+			tracker_right = Tracker::create(tracker_algorithm);
+			if (tracker_left == NULL) {
+				cout
+						<< "***Error in the instantiation of the left tracker...***\n";
+				continue;
+			}
+			if (tracker_right == NULL) {
+				cout
+						<< "***Error in the instantiation of the right tracker...***\n";
+				continue;
+			}
 		}
 		outside_loop++;
 		if (inside_loop % 10 == 0) {
