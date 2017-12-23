@@ -121,6 +121,7 @@ int main(int argc, char **argv) {
 			outside_loop = 0;
 			tracker_initialized = false;
 		}
+		outside_loop++;
 		if (inside_loop % 10 == 0) {
 			cout << "time: " << (float) (finish - start) / CLOCKS_PER_SEC
 					<< " (s) " << endl;
@@ -360,7 +361,6 @@ int main(int argc, char **argv) {
 		if (c == 27) {
 			break;
 		}
-		outside_loop++;
 		//imshow("left",pic_left);
 		//imshow("right",pic_right);
 	}
