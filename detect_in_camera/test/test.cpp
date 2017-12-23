@@ -11,7 +11,7 @@
 #include "my_refind/para.h"
 #include "my_refind/PID.h"
 #include "my_refind/Predictor.hpp"
-#include "my_refind/uart.h"
+//#include "my_refind/uart.h"
 #include <wiringPi.h>
 #include <softPwm.h>
 
