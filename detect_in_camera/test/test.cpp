@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
 		cam_left >> pic_left;
 		cam_right >> pic_right;
 		//多少个周期一检测，视情况调整
-		if(outside_loop/300==0)
+		if(outside_loop%300==0)
 		{
 			outside_loop=0;
 			tracker_initialized=false;
@@ -190,10 +190,11 @@ int main(int argc, char **argv) {
 				}
 				tracker_initialized = true;
 				finish = clock();
+				cout << "initialize tracker ok" << endl;
 				continue;
 			} else if (tracker_initialized) {
 				//updates the tracker
-				cout << "initialize tracker ok" << endl;
+
 				Rect2d target_left_box;
 				Rect2d target_right_box;
 
