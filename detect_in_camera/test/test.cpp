@@ -4,25 +4,66 @@
 #include <opencv2/core/utility.hpp>
 #include <opencv2/tracking.hpp>
 
+#include <stdlib.h>
+#include "my_refind/KFT.hpp"
+#include "my_refind/LedController.h"
+#include "my_refind/motor.h"
+#include "my_refind/para.h"
+#include "my_refind/PID.h"
+#include "my_refind/Predictor.hpp"
+#include "my_refind/uart.h"
+#include <wiringPi.h>
+#include <softPwm.h>
+
+#define RANGE	200 //1 means 100 us , 200 means 20 ms 1等于100微妙，200等于20毫秒
+#define X_PIN	1
+#define Y_PIN	15
+
 using namespace std;
 using namespace cv;
 //像素坐标系和相机坐标系（归一化的，就是说d=1）的转化
 Point2f pixel2cam(const Point2d& p, const Mat& K);
 Point2d cam2pixel(const Point2d& p, const Mat& K_right);
+bool servo_init(int pin, int range);
+bool servo_turn(int pin, double angle);
 
 int main(int argc, char **argv) {
 	if (argc != 3) {
 		cerr
-				<< "usage: ./area_reprojected  stereo_camera_config target_detect_config"
+				<< "usage: ./test ../config/stereo_paras.yaml ../config/haarcascade_frontalface_alt.xml"
 				<< endl;
 		return -1;
 	}
 	cout << "program start ok" << endl;
+	LedController led;
+	for (int i = 0; i < 4; i++) {
+		led.ledON();
+		usleep(100000);
+		led.ledOFF();
+		usleep(100000);
+	}
+	//init servo
+	if (!servo_init(X_PIN, RANGE)) {
+		cout << "yaw servo init failed" << endl;
+		return -1;
+	}
+	if (!servo_init(Y_PIN, RANGE)) {
+		cout << "pitch servo init failed" << endl;
+		return -1;
+	}
+	PIDctrl pidX(aPx, aIx, aDx, 20);
+	PIDctrl pidY(aPy, aIy, aDy, 20);//init PID
+	double error_x = 0.0, error_y = 0.0;
+
+	PointKF KF;//init Kalman Filter
+	KF.kalmanInit();
+
 	//init tracker//////////////////
 	String tracker_algorithm = "KCF";
 	//String video_name = parser.get<String>( 1 );
 	Ptr<Tracker> tracker_left;
 	Ptr<Tracker> tracker_right;
+
 	//init camera,0-left/1-right
 	VideoCapture cam_left(0);
 	VideoCapture cam_right(1);
@@ -235,9 +276,8 @@ int main(int argc, char **argv) {
 
 				//如果两边各有一个，认为是同一个
 				if (left_detected && right_detected) {
+					led.ledON();	//两边都检测到，亮灯
 					cout << "one target, and detected by two camera" << endl;
-					////////////////////////////////////坐标相关
-
 					//提取target所在区域的特征点
 					//orb->detect(pic_left_rect(target_left_box), keypoints_left);
 					//orb->detect(pic_right_rect(target_right_box),
@@ -326,11 +366,20 @@ int main(int argc, char **argv) {
 					cout << "target 3d corrdinate:" << endl << x_left << "	"
 							<< y_left << "	" << z_left << endl;
 					cout << endl;
-					/////////////////////坐标相关
-
+					//start control
+					error_x= x_left/z_left*180/3.1416;
+					error_y= y_left/z_left*180/3.1416;
+					// pid input is angle error
+					KF.kalmanPredict(error_x, error_y);
+					error_x = KF.predict_pt.x;
+					error_y = KF.predict_pt.y;
+					pidX.calc(error_x);
+					pidY.calc(error_y);
+					servo_turn(X_PIN,pidX.output);
+					servo_turn(Y_PIN,pidY.output);
 				}
 				//如果只有左边检测到，给个可能的区域，物体在那个射线上
-				else if (left_detected && !right_detected) {		//only left
+				else if (left_detected && !right_detected) {	//only left
 					cout
 							<< "left detect and right not detect, use only left camera"
 							<< endl;
@@ -367,9 +416,56 @@ int main(int argc, char **argv) {
 		//imshow("left",pic_left);
 		//imshow("right",pic_right);
 	}
+
+	int pin;
+	pin = atoi(argv[1]);  //第一个参数为所要控制的引脚wiringpi编号
+	int i;
+	float degree;
+	if (!(pin >= 0 && pin <= 8)) {     //第二个参数为需要控制舵机转动的角度
+		printf("only setup pin 1 to 8\n");
+		exit(0);
+	}
+	if (!(atoi(argv[2]) >= -135 && atoi(argv[2]) <= 135)) {
+		printf("degree is between -135 and 135\n");
+		exit(0);
+	}
+
+	degree = 15 + atof(argv[2]) / 270.0 * 20.0;
+	wiringPiSetup();  //wiringpi初始化
+	softPwmCreate(pin, 15, RANGE);  //创建一个使舵机转到中心的pwm输出信号
+	delay(1000);
+	for (i = 0; i < 5; i++) {
+		softPwmWrite(pin, 15);   //使舵机转到中心
+		delayMicroseconds(1000000);
+		printf("%f\n", degree);
+		softPwmWrite(pin, degree);   //转到预期角度
+		delayMicroseconds(1000000);
+	}
+
 	return 0;
 }
 
+bool servo_init(int pin, int range) {
+	if (!(pin >= 0 && pin <= 16)) {     //第二个参数为需要控制舵机转动的角度
+		cout << "only setup pin 1 to 16\n" << endl;
+		return false;
+	}
+	wiringPiSetup();  //wiringpi初始化
+	softPwmCreate(pin, 15, RANGE);  //创建一个使舵机转到中心的pwm输出信号
+	return true;
+
+}
+
+bool servo_turn(int pin, double angle) {
+	if (angle > 45 || angle < -45) {
+		cout << "too large angle " << endl;
+		return false;
+	}
+	double degree = 15 + angle / 270.0 * 20.0;
+	cout << degree << endl;
+	softPwmWrite(pin, degree);  //转到预期角度
+	return true;
+}
 Point2f pixel2cam(const Point2d& p, const Mat& K) {
 	return Point2f((p.x - K.at<double>(0, 2)) / K.at<double>(0, 0),
 			(p.y - K.at<double>(1, 2)) / K.at<double>(1, 1));

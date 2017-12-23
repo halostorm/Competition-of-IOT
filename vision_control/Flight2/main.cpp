@@ -40,7 +40,6 @@ using namespace std;
 using namespace DJI;
 using namespace DJI::onboardSDK;
 
-
 //DEBUG parameter
 #define SHOWIMG 0
 #define USE_LOGFILE 1
@@ -58,25 +57,22 @@ bool LAND_MODE = false;
 int BASEDETECT_MODE = 0;
 char device[] = "/dev/ttyS0";
 int fd;
-void sig_callback(int signum)
-{
+void sig_callback(int signum) {
 	printf("exit read image\n");
 	RUNNING_MODE = false;
 	return;
 }
 
-struct ImgData
-{
+struct ImgData {
 	Mat img;
 	unsigned int framenum;
 };
 ImgData image;
 
-static void *readLoop(void *data)
-{
-	RMVideoCapture cap("/dev/video0",3);
+static void *readLoop(void *data) {
+	RMVideoCapture cap("/dev/video0", 3);
 	cap.setVideoFormat(640, 480, 1);
-	cap.setExposureTime(0, 70);//settings->exposure_time);
+	cap.setExposureTime(0, 70); //settings->exposure_time);
 	cap.startStream();
 	cap.info();
 	ImgData img;
@@ -85,8 +81,7 @@ static void *readLoop(void *data)
 
 	double start, end;
 	RUNNING_MODE = true;
-	while (RUNNING_MODE)
-	{
+	while (RUNNING_MODE) {
 		cap >> img.img;
 		img.framenum = cap.getFrameCount();
 		pthread_rwlock_wrlock(&img_spinlock);
@@ -98,33 +93,31 @@ static void *readLoop(void *data)
 	cap.closeStream();
 }
 
-
 /*static void *armorLoop(void *data)
-{
-	int fd = (int)data;
-	cout << fd;
-	
-	static unsigned char motor_flag;
-	while (RUNNING_MODE)
-	{
-		if (bcd.rc.gear == -4545)
-		{
-			motor_flag = 0xAA;
-			uartSend(fd, &motor_flag, 1);
-		}
-		else
-		{
-			motor_flag = 0xBB;
-			uartSend(fd, &motor_flag, 1);
-		}
-	}
-}
-*/
+ {
+ int fd = (int)data;
+ cout << fd;
 
-static void *detectLoop(void *data)
-{
-	int offsetx=15;
-	int offsety=-40;
+ static unsigned char motor_flag;
+ while (RUNNING_MODE)
+ {
+ if (bcd.rc.gear == -4545)
+ {
+ motor_flag = 0xAA;
+ uartSend(fd, &motor_flag, 1);
+ }
+ else
+ {
+ motor_flag = 0xBB;
+ uartSend(fd, &motor_flag, 1);
+ }
+ }
+ }
+ */
+
+static void *detectLoop(void *data) {
+	int offsetx = 15;
+	int offsety = -40;
 	//图像初始化
 	ImgData image_get;
 	Mat img_gray;
@@ -139,83 +132,73 @@ static void *detectLoop(void *data)
 	}
 	led.ledOFF();
 
-	//PID
+	//PID init
 	double dx = 0, dy = 0;
 	PIDctrl pidX(aPx, aIx, aDx, 0.5);
 	PIDctrl pidY(aPy, aIy, aDy, 0.5);
 	PIDctrl pidX2(bPx, bIx, bDx, 0.5);
 	PIDctrl pidY2(bPy, bIy, bDy, 0.5);
 
-	
 	/*pthread_t armor_thread;
-	pthread_create(&armor_thread, NULL, armorLoop, (void*)fd);*/
+	 pthread_create(&armor_thread, NULL, armorLoop, (void*)fd);*/
 
 	PointKF KF;
 	KF.kalmanInit();
 
 	//int gear=-4545;
-	
-	while (1)
-	{
+
+	while (1) {
 		//waitKey(3000);
 		end = getTickCount();
 		//cout<<(end-start)/getTickFrequency()<<endl;
 		start = getTickCount();
 
-		if (1)//Circle Detection
+		if (1) //Circle Detection
 		{
 			image_get.img = image.img.clone();
 			image_get.framenum = image.framenum;
 			cvtColor(image_get.img, img_gray, CV_RGB2GRAY);
 			tria.preproc(img_gray);
 			circledect.setImg(img_gray);
-			if (circledect.circleDetection() == true)
-			{
+			if (circledect.circleDetection() == true) {
 				led.ledON();
-				dy = -(circledect.center.x - cam_x)+offsetx;//60
-				dx = -(cam_y - circledect.center.y)+offsety;// + circledect.radius / 1.5;// 25
+				dy = -(circledect.center.x - cam_x) + offsetx; //60
+				dx = -(cam_y - circledect.center.y) + offsety; // + circledect.radius / 1.5;// 25
 				r = circledect.radius;
-				KF.kalmanPredict(dx,dy);
-				dx=KF.predict_pt.x;
-				dy=KF.predict_pt.y;
+				KF.kalmanPredict(dx, dy);
+				dx = KF.predict_pt.x;
+				dy = KF.predict_pt.y;
 				centerCount++;
 				lostcount = 0;
 				//cout<< "Frame:" << image_get.framenum<<"adx:="<<dx<<" ,dy:="<<dy<<endl;
-					pidX2.calc(dx);
-					pidY2.calc(dy);
+				pidX2.calc(dx);
+				pidY2.calc(dy);
 
-
-					pidX.calc(dx);
-					pidY.calc(dy);
-
-				}
-#if SHOWIMG
-				circledect.drawCircle(image_get.img);
-#endif
+				pidX.calc(dx);
+				pidY.calc(dy);
 
 			}
-			else if (tria.triangleDetection(img_gray)&& tria.findpoint()==1)
-			{
+#if SHOWIMG
+			circledect.drawCircle(image_get.img);
+#endif
 
+		} else if (tria.triangleDetection(img_gray) && tria.findpoint() == 1) {
 
 #if SHOWIMG
-				tria.drawTriangle(image_get.img);
+			tria.drawTriangle(image_get.img);
 #endif
-			}
-			else
-			{
-				//led.ledOFF();
-				dx = 0; dy = 0;
-				//	pidX.reset();
-				//	pidY.reset();
-				lostcount++;
-				//led.ledOFF();
-				if(lostcount>15)led.ledOFF();
-				pidX2.reset();
-				pidY2.reset();
-
-
-
+		} else {
+			//led.ledOFF();
+			dx = 0;
+			dy = 0;
+			//	pidX.reset();
+			//	pidY.reset();
+			lostcount++;
+			//led.ledOFF();
+			if (lostcount > 15)
+				led.ledOFF();
+			pidX2.reset();
+			pidY2.reset();
 
 #if SHOWIMG
 			imshow("img", image_get.img);
@@ -225,8 +208,7 @@ static void *detectLoop(void *data)
 
 	}
 }
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	streambuf* coutBuf = cout.rdbuf();
 #if USE_LOGFILE	
 	ofstream file("out.log");
@@ -234,7 +216,8 @@ int main(int argc, char **argv)
 	cout.rdbuf(buf);
 #endif
 
-	cout << "For x: P-" << aPx << "  I-" << aIx << "  D-" << aDx << "\nFor y: P-" << aPy << "  I-" << aIy << "  D-" << aDy << endl;
+	cout << "For x: P-" << aPx << "  I-" << aIx << "  D-" << aDx
+			<< "\nFor y: P-" << aPy << "  I-" << aIy << "  D-" << aDy << endl;
 
 	pthread_attr_t attr;
 	struct sched_param schedparam;
@@ -249,36 +232,30 @@ int main(int argc, char **argv)
 		printf("device error");
 	uartSet(fd);
 
-	if (0 != geteuid())
-	{
+	if (0 != geteuid()) {
 		printf("Please run ./test as root!\n");
 
 		return -1;
 	}
 
-
-	if (pthread_create(&read_thread, NULL, readLoop, NULL) != 0)
-	{
+	if (pthread_create(&read_thread, NULL, readLoop, NULL) != 0) {
 		printf("Read_thread create");
 		return -1;
 	}
 
 	/*if (pthread_create(&tags_thread, NULL, tagsLoop, NULL) != 0)
-	{
-		printf("tag_thread create");
-		return -1;
-	}*/
+	 {
+	 printf("tag_thread create");
+	 return -1;
+	 }*/
 
-
-	if (pthread_create(&detect_thread, NULL, detectLoop, NULL) != 0)
-	{
+	if (pthread_create(&detect_thread, NULL, detectLoop, NULL) != 0) {
 		printf("detect_thread create");
 		return -1;
 	}
 
 	pthread_join(detect_thread, NULL);/*wait for read_thread exit*/
 	pthread_join(read_thread, NULL);/*wait for read_thread exit*/
-	
 
 	sleep(3);
 
