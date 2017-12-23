@@ -4,7 +4,7 @@
 bool led_status;
 static void *ledloop(void *data){
 	int fd2led;
-	if(!(fd2led = open("/sys/class/gpio/gpio158/value", O_WRONLY))){cout<<"cannot open gpio"<<endl;return 0;}
+	if(!(fd2led = open("/sys/class/gpio/gpio16/value", O_WRONLY))){cout<<"cannot open gpio"<<endl;return 0;}
 	while(1){
 		if(led_status){
 			write(fd2led, "0", strlen("1"));
@@ -44,7 +44,7 @@ public:
         ++flash_cnt;
     }
 	int readled(){
-		int fd2ledin=open("/sys/class/gpio/gpio157/value",O_RDONLY);
+		int fd2ledin=open("/sys/class/gpio/gpio16/value",O_RDONLY);
 		char value;
 		read(fd2ledin, &value,1);
 		//printf("-----%c------",value);
