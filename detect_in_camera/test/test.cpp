@@ -117,10 +117,10 @@ int main(int argc, char **argv) {
 		cam_left >> pic_left;
 		cam_right >> pic_right;
 		//多少个周期一检测，视情况调整
-		//if (outside_loop % 300 == 0) {
-		//	outside_loop = 0;
-		//	tracker_initialized = false;
-		//}
+		if (outside_loop % 1200 == 0) {
+			outside_loop = 0;
+			tracker_initialized = false;
+		}
 		if (inside_loop % 10 == 0) {
 			cout << "time: " << (float) (finish - start) / CLOCKS_PER_SEC
 					<< " (s) " << endl;
