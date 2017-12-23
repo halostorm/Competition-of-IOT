@@ -111,18 +111,17 @@ int main(int argc, char **argv) {
 	clock_t start, finish;
 	start = clock();
 	finish = clock();
-	int outside_loop=0;
+	int outside_loop = 0;
 	while (1) {
 		//视频流输入图片
 		cam_left >> pic_left;
 		cam_right >> pic_right;
 		//多少个周期一检测，视情况调整
-		if(outside_loop%300==0)
-		{
-			outside_loop=0;
-			tracker_initialized=false;
+		if (outside_loop % 300 == 0) {
+			outside_loop = 0;
+			tracker_initialized = false;
 		}
-		if (inside_loop % 10 == 0) {
+		if (inside_loop % 30 == 0) {
 			cout << "time: " << (float) (finish - start) / CLOCKS_PER_SEC
 					<< " (s) " << endl;
 			start = clock();
@@ -205,8 +204,10 @@ int main(int argc, char **argv) {
 					rectangle(pic_left_rect, target_left_box, Scalar(255, 0, 0),
 							2, 1);
 					cout << "begin center ok" << endl;
-					center_left.x=target_left_box.x + cvRound(target_left_box.width / 2.0);
-					center_left.y=target_left_box.y+ cvRound(target_left_box.height / 2.0);
+					center_left.x = target_left_box.x
+							+ cvRound(target_left_box.width / 2.0);
+					center_left.y = target_left_box.y
+							+ cvRound(target_left_box.height / 2.0);
 
 					cout << "set left center ok" << endl;
 					left_detected = true;
@@ -227,9 +228,7 @@ int main(int argc, char **argv) {
 				} else {
 					right_detected = false;
 				}
-				cout << "can show" << endl;
-				imshow("left", pic_left_rect);
-				imshow("right", pic_right_rect);
+
 				//如果两边各有一个，认为是同一个
 				if (left_detected && right_detected) {
 					cout << "one target, and detected by two camera" << endl;
@@ -298,8 +297,7 @@ int main(int argc, char **argv) {
 					vector<Point2d> c_left;
 					c_left.push_back(center_left);
 					c_right.push_back(center_right);
-					triangulatePoints(T1, T2, c_left, c_right,
-							pts_4d);
+					triangulatePoints(T1, T2, c_left, c_right, pts_4d);
 					//齐次的转化为非其次的
 					vector<Point3d> points;
 					Mat x = pts_4d.col(0);
@@ -334,8 +332,7 @@ int main(int argc, char **argv) {
 							<< endl;
 
 					vector<Point2d> c_left;
-					c_left.push_back(
-							pixel2cam(center_left, stereo.K_l));
+					c_left.push_back(pixel2cam(center_left, stereo.K_l));
 					double x_left = 0, y_left = 0, z_left = 1000;
 					x_left = c_left[0].x;
 					y_left = c_left[0].y;
@@ -347,8 +344,10 @@ int main(int argc, char **argv) {
 					cout << "no target，wait for next" << endl;
 				}
 
-
 			}
+			cout << "can show" << endl;
+			imshow("left", pic_left_rect);
+			imshow("right", pic_right_rect);
 			finish = clock();
 		} else {
 			inside_loop++;
