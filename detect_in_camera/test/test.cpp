@@ -35,6 +35,7 @@ int main(int argc, char **argv) {
 		return -1;
 	}
 	cout << "program start ok" << endl;
+	/*
 	LedController led;
 	for (int i = 0; i < 4; i++) {
 		led.ledON();
@@ -42,6 +43,7 @@ int main(int argc, char **argv) {
 		led.ledOFF();
 		usleep(100000);
 	}
+	*/
 	//init servo
 	if (!servo_init(X_PIN, RANGE)) {
 		cout << "yaw servo init failed" << endl;
