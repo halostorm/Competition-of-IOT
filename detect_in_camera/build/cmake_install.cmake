@@ -1,4 +1,4 @@
-# Install script for directory: /home/halo/PX4/Competition-of-IOT/detect_in_camera
+# Install script for directory: /home/pi/src/Competition-of-IOT/detect_in_camera
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,8 +34,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/src/cmake_install.cmake")
-  include("/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/test/cmake_install.cmake")
+  include("/home/pi/src/Competition-of-IOT/detect_in_camera/build/src/cmake_install.cmake")
+  include("/home/pi/src/Competition-of-IOT/detect_in_camera/build/test/cmake_install.cmake")
 
 endif()
 
@@ -47,5 +47,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/pi/src/Competition-of-IOT/detect_in_camera/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -6,5 +6,5 @@ CXX_FLAGS = -std=c++11 -march=native -O3 -O3 -DNDEBUG
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /usr/local/include -isystem /usr/local/include/opencv -I/home/halo/PX4/Competition-of-IOT/detect_in_camera/include 
+CXX_INCLUDES = -isystem /usr/local/include -isystem /usr/local/include/opencv -I/home/pi/src/Competition-of-IOT/detect_in_camera/include 
 
