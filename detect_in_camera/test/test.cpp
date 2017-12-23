@@ -106,21 +106,27 @@ int main(int argc, char **argv) {
 	//vector<DMatch> matches;
 	//BFMatcher matcher(NORM_HAMMING);
 
-	int loop = 0;
+	int inside_loop = 0;
 	cout << "begin video" << endl;
 	clock_t start, finish;
 	start = clock();
 	finish = clock();
+	int outside_loop=0;
 	while (1) {
 		//视频流输入图片
 		cam_left >> pic_left;
 		cam_right >> pic_right;
 		//多少个周期一检测，视情况调整
-		if (loop % 30 == 0) {
+		if(outside_loop/300==0)
+		{
+			outside_loop=0;
+			tracker_initialized=false;
+		}
+		if (inside_loop % 10 == 0) {
 			cout << "time: " << (float) (finish - start) / CLOCKS_PER_SEC
 					<< " (s) " << endl;
 			start = clock();
-			loop = 0;
+			inside_loop = 0;
 			//先对图片做矫正
 			stereo.doRectifyL(pic_left, pic_left_rect);
 			stereo.doRectifyR(pic_right, pic_right_rect);
@@ -344,7 +350,7 @@ int main(int argc, char **argv) {
 			}
 			finish = clock();
 		} else {
-			loop++;
+			inside_loop++;
 		}
 		char c = waitKey(10);
 		if (c == 32) {
@@ -354,6 +360,7 @@ int main(int argc, char **argv) {
 		if (c == 27) {
 			break;
 		}
+		outside_loop++;
 		//imshow("left",pic_left);
 		//imshow("right",pic_right);
 	}
