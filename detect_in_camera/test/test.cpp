@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include "my_refind/KFT.hpp"
 #include "my_refind/LedController.h"
-#include "my_refind/motor.h"
+//#include "my_refind/motor.h"
 #include "my_refind/para.h"
 #include "my_refind/PID.h"
 #include "my_refind/Predictor.hpp"
