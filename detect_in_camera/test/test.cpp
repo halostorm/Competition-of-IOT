@@ -278,7 +278,7 @@ int main(int argc, char **argv) {
 
 				//如果两边各有一个，认为是同一个
 				if (left_detected && right_detected) {
-					led.ledON();	//两边都检测到，亮灯
+					//led.ledON();	//两边都检测到，亮灯
 					cout << "one target, and detected by two camera" << endl;
 					//提取target所在区域的特征点
 					//orb->detect(pic_left_rect(target_left_box), keypoints_left);
