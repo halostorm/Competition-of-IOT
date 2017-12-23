@@ -3,7 +3,7 @@ project(detect_in_camera)
 
 set( CMAKE_CXX_COMPILER "g++" )
 set( CMAKE_BUILD_TYPE "Release" )
-set( CMAKE_CXX_FLAGS "-std=c++11 -march=native -O3" )
+set( CMAKE_CXX_FLAGS "-std=c++11 -march=native -O3 -lwiringPi" )
 
 
 set( EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin )
