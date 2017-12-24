@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pi/src/Competition-of-IOT/detect_in_camera
+CMAKE_SOURCE_DIR = /home/halo/PX4/Competition-of-IOT/detect_in_camera
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pi/src/Competition-of-IOT/detect_in_camera/build
+CMAKE_BINARY_DIR = /home/halo/PX4/Competition-of-IOT/detect_in_camera/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/src/Competition-of-IOT/detect_in_camera/build/CMakeFiles /home/pi/src/Competition-of-IOT/detect_in_camera/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/halo/PX4/Competition-of-IOT/detect_in_camera/build/CMakeFiles /home/halo/PX4/Competition-of-IOT/detect_in_camera/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/src/Competition-of-IOT/detect_in_camera/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/halo/PX4/Competition-of-IOT/detect_in_camera/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -124,17 +124,17 @@ my_detect/fast:
 .PHONY : my_detect/fast
 
 #=============================================================================
-# Target rules for targets named test
+# Target rules for targets named test_single
 
 # Build rule for target.
-test: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test
-.PHONY : test
+test_single: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_single
+.PHONY : test_single
 
 # fast build rule for target.
-test/fast:
-	$(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/build
-.PHONY : test/fast
+test_single/fast:
+	$(MAKE) -f test/CMakeFiles/test_single.dir/build.make test/CMakeFiles/test_single.dir/build
+.PHONY : test_single/fast
 
 # Help Target
 help:
@@ -145,7 +145,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... my_detect"
-	@echo "... test"
+	@echo "... test_single"
 .PHONY : help
 
 

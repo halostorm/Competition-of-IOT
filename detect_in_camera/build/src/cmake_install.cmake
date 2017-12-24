@@ -1,4 +1,4 @@
-# Install script for directory: /home/pi/src/Competition-of-IOT/detect_in_camera/src
+# Install script for directory: /home/halo/PX4/Competition-of-IOT/detect_in_camera/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
