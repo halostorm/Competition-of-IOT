@@ -4,7 +4,7 @@
 src/CMakeFiles/my_detect.dir/config.cpp.o
  ../include/my_refind/common.h
  ../include/my_refind/config.h
- /home/pi/src/Competition-of-IOT/detect_in_camera/src/config.cpp
+ /home/halo/PX4/Competition-of-IOT/detect_in_camera/src/config.cpp
  /usr/local/include/opencv/cxcore.h
  /usr/local/include/opencv2/calib3d.hpp
  /usr/local/include/opencv2/calib3d/calib3d_c.h
