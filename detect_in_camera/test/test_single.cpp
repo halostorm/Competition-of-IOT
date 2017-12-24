@@ -229,7 +229,7 @@ int main(int argc, char **argv) {
 
 					vector<Point2d> c_left;
 					c_left.push_back(pixel2cam(center_left, stereo.K_l));
-					double x_left = 0, y_left = 0, z_left = 1000;
+					double x_left = 0, y_left = 0, z_left = distance;
 					x_left = c_left[0].x;
 					y_left = c_left[0].y;
 
@@ -237,8 +237,8 @@ int main(int argc, char **argv) {
 							<< "		" << y_left * 1000 << "		" << z_left << endl;
 
 					//start control
-					error_x = x_left / z_left * 180 / 3.1416;
-					error_y = y_left / z_left * 180 / 3.1416;
+					error_x = (x_left-offset_x) / z_left * 180 / 3.1416;
+					error_y = (y_left-offset_y) / z_left * 180 / 3.1416;
 					// pid input is angle error
 					KF.kalmanPredict(error_x, error_y);
 					error_x = KF.predict_pt.x;
@@ -269,32 +269,6 @@ int main(int argc, char **argv) {
 		//imshow("left",pic_left);
 		//imshow("right",pic_right);
 	}
-
-	int pin;
-	pin = atoi(argv[1]);  //第一个参数为所要控制的引脚wiringpi编号
-	int i;
-	float degree;
-	if (!(pin >= 0 && pin <= 8)) {     //第二个参数为需要控制舵机转动的角度
-		printf("only setup pin 1 to 8\n");
-		exit(0);
-	}
-	if (!(atoi(argv[2]) >= -135 && atoi(argv[2]) <= 135)) {
-		printf("degree is between -135 and 135\n");
-		exit(0);
-	}
-
-	degree = 15 + atof(argv[2]) / 270.0 * 20.0;
-	wiringPiSetup();  //wiringpi初始化
-	softPwmCreate(pin, 15, RANGE);  //创建一个使舵机转到中心的pwm输出信号
-	delay(1000);
-	for (i = 0; i < 5; i++) {
-		softPwmWrite(pin, 15);   //使舵机转到中心
-		delayMicroseconds(1000000);
-		printf("%f\n", degree);
-		softPwmWrite(pin, degree);   //转到预期角度
-		delayMicroseconds(1000000);
-	}
-
 	return 0;
 }
 
