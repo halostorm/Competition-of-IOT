@@ -57,38 +57,38 @@ include test/CMakeFiles/test.dir/progress.make
 # Include the compile flags for this target's objects.
 include test/CMakeFiles/test.dir/flags.make
 
-test/CMakeFiles/test.dir/test.cpp.o: test/CMakeFiles/test.dir/flags.make
-test/CMakeFiles/test.dir/test.cpp.o: ../test/test.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pi/src/Competition-of-IOT/detect_in_camera/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object test/CMakeFiles/test.dir/test.cpp.o"
-	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build/test && g++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test.dir/test.cpp.o -c /home/pi/src/Competition-of-IOT/detect_in_camera/test/test.cpp
+test/CMakeFiles/test.dir/test_single.cpp.o: test/CMakeFiles/test.dir/flags.make
+test/CMakeFiles/test.dir/test_single.cpp.o: ../test/test_single.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pi/src/Competition-of-IOT/detect_in_camera/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object test/CMakeFiles/test.dir/test_single.cpp.o"
+	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build/test && g++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test.dir/test_single.cpp.o -c /home/pi/src/Competition-of-IOT/detect_in_camera/test/test_single.cpp
 
-test/CMakeFiles/test.dir/test.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test.dir/test.cpp.i"
-	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build/test && g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pi/src/Competition-of-IOT/detect_in_camera/test/test.cpp > CMakeFiles/test.dir/test.cpp.i
+test/CMakeFiles/test.dir/test_single.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test.dir/test_single.cpp.i"
+	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build/test && g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pi/src/Competition-of-IOT/detect_in_camera/test/test_single.cpp > CMakeFiles/test.dir/test_single.cpp.i
 
-test/CMakeFiles/test.dir/test.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test.dir/test.cpp.s"
-	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build/test && g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pi/src/Competition-of-IOT/detect_in_camera/test/test.cpp -o CMakeFiles/test.dir/test.cpp.s
+test/CMakeFiles/test.dir/test_single.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test.dir/test_single.cpp.s"
+	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build/test && g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pi/src/Competition-of-IOT/detect_in_camera/test/test_single.cpp -o CMakeFiles/test.dir/test_single.cpp.s
 
-test/CMakeFiles/test.dir/test.cpp.o.requires:
+test/CMakeFiles/test.dir/test_single.cpp.o.requires:
 
-.PHONY : test/CMakeFiles/test.dir/test.cpp.o.requires
+.PHONY : test/CMakeFiles/test.dir/test_single.cpp.o.requires
 
-test/CMakeFiles/test.dir/test.cpp.o.provides: test/CMakeFiles/test.dir/test.cpp.o.requires
-	$(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test.cpp.o.provides.build
-.PHONY : test/CMakeFiles/test.dir/test.cpp.o.provides
+test/CMakeFiles/test.dir/test_single.cpp.o.provides: test/CMakeFiles/test.dir/test_single.cpp.o.requires
+	$(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test_single.cpp.o.provides.build
+.PHONY : test/CMakeFiles/test.dir/test_single.cpp.o.provides
 
-test/CMakeFiles/test.dir/test.cpp.o.provides.build: test/CMakeFiles/test.dir/test.cpp.o
+test/CMakeFiles/test.dir/test_single.cpp.o.provides.build: test/CMakeFiles/test.dir/test_single.cpp.o
 
 
 # Object files for target test
 test_OBJECTS = \
-"CMakeFiles/test.dir/test.cpp.o"
+"CMakeFiles/test.dir/test_single.cpp.o"
 
 # External object files for target test
 test_EXTERNAL_OBJECTS =
 
-../bin/test: test/CMakeFiles/test.dir/test.cpp.o
+../bin/test: test/CMakeFiles/test.dir/test_single.cpp.o
 ../bin/test: test/CMakeFiles/test.dir/build.make
 ../bin/test: ../lib/libmy_detect.so
 ../bin/test: /usr/local/lib/libopencv_stitching.so.3.2.0
@@ -142,7 +142,7 @@ test/CMakeFiles/test.dir/build: ../bin/test
 
 .PHONY : test/CMakeFiles/test.dir/build
 
-test/CMakeFiles/test.dir/requires: test/CMakeFiles/test.dir/test.cpp.o.requires
+test/CMakeFiles/test.dir/requires: test/CMakeFiles/test.dir/test_single.cpp.o.requires
 
 .PHONY : test/CMakeFiles/test.dir/requires
 

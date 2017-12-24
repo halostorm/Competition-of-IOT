@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/pi/src/Competition-of-IOT/detect_in_camera/test/test.cpp" "/home/pi/src/Competition-of-IOT/detect_in_camera/build/test/CMakeFiles/test.dir/test.cpp.o"
+  "/home/pi/src/Competition-of-IOT/detect_in_camera/test/test_single.cpp" "/home/pi/src/Competition-of-IOT/detect_in_camera/build/test/CMakeFiles/test.dir/test_single.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

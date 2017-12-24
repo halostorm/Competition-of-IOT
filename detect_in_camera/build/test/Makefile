@@ -125,32 +125,32 @@ test/fast:
 	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/build
 .PHONY : test/fast
 
-test.o: test.cpp.o
+test_single.o: test_single.cpp.o
 
-.PHONY : test.o
+.PHONY : test_single.o
 
 # target to build an object file
-test.cpp.o:
-	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test.cpp.o
-.PHONY : test.cpp.o
+test_single.cpp.o:
+	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test_single.cpp.o
+.PHONY : test_single.cpp.o
 
-test.i: test.cpp.i
+test_single.i: test_single.cpp.i
 
-.PHONY : test.i
+.PHONY : test_single.i
 
 # target to preprocess a source file
-test.cpp.i:
-	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test.cpp.i
-.PHONY : test.cpp.i
+test_single.cpp.i:
+	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test_single.cpp.i
+.PHONY : test_single.cpp.i
 
-test.s: test.cpp.s
+test_single.s: test_single.cpp.s
 
-.PHONY : test.s
+.PHONY : test_single.s
 
 # target to generate assembly for a file
-test.cpp.s:
-	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test.cpp.s
-.PHONY : test.cpp.s
+test_single.cpp.s:
+	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test_single.cpp.s
+.PHONY : test_single.cpp.s
 
 # Help Target
 help:
@@ -161,9 +161,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test"
-	@echo "... test.o"
-	@echo "... test.i"
-	@echo "... test.s"
+	@echo "... test_single.o"
+	@echo "... test_single.i"
+	@echo "... test_single.s"
 .PHONY : help
 
 

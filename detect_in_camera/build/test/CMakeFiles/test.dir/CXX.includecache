@@ -6,6 +6,36 @@
 
 #IncludeRegexTransform: 
 
+../include/my_refind/KFT.hpp
+opencv2/opencv.hpp
+-
+vector
+-
+string
+-
+iostream
+-
+
+../include/my_refind/LedController.h
+unistd.h
+-
+fcntl.h
+-
+
+../include/my_refind/PID.h
+math.h
+-
+iostream
+-
+
+../include/my_refind/Predictor.hpp
+list
+-
+opencv2/opencv.hpp
+../include/my_refind/opencv2/opencv.hpp
+algorithm
+-
+
 ../include/my_refind/common.h
 iostream
 -
@@ -30,7 +60,9 @@ ctime
 my_refind/common.h
 ../include/my_refind/my_refind/common.h
 
-/home/pi/src/Competition-of-IOT/detect_in_camera/test/test.cpp
+../include/my_refind/para.h
+
+/home/pi/src/Competition-of-IOT/detect_in_camera/test/test_single.cpp
 iostream
 -
 opencv2/opencv.hpp
@@ -40,6 +72,22 @@ my_refind/config.h
 opencv2/core/utility.hpp
 -
 opencv2/tracking.hpp
+-
+stdlib.h
+-
+my_refind/KFT.hpp
+/home/pi/src/Competition-of-IOT/detect_in_camera/test/my_refind/KFT.hpp
+my_refind/LedController.h
+/home/pi/src/Competition-of-IOT/detect_in_camera/test/my_refind/LedController.h
+my_refind/para.h
+/home/pi/src/Competition-of-IOT/detect_in_camera/test/my_refind/para.h
+my_refind/PID.h
+/home/pi/src/Competition-of-IOT/detect_in_camera/test/my_refind/PID.h
+my_refind/Predictor.hpp
+/home/pi/src/Competition-of-IOT/detect_in_camera/test/my_refind/Predictor.hpp
+wiringPi.h
+-
+softPwm.h
 -
 
 /usr/local/include/opencv/cxcore.h
@@ -1311,4 +1359,8 @@ opencv2/core/cuda.hpp
 /usr/local/include/opencv2/xfeatures2d/nonfree.hpp
 opencv2/features2d.hpp
 /usr/local/include/opencv2/xfeatures2d/opencv2/features2d.hpp
+
+/usr/local/include/softPwm.h
+
+/usr/local/include/wiringPi.h
 
