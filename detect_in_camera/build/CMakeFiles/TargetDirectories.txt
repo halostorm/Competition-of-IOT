@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /home/pi/src/Competition-of-IOT/detect_in_camera/build/CMakeFiles/rebuild_cache.dir
 /home/pi/src/Competition-of-IOT/detect_in_camera/build/CMakeFiles/edit_cache.dir
 /home/pi/src/Competition-of-IOT/detect_in_camera/build/src/CMakeFiles/rebuild_cache.dir
@@ -7,13 +6,3 @@
 /home/pi/src/Competition-of-IOT/detect_in_camera/build/test/CMakeFiles/rebuild_cache.dir
 /home/pi/src/Competition-of-IOT/detect_in_camera/build/test/CMakeFiles/edit_cache.dir
 /home/pi/src/Competition-of-IOT/detect_in_camera/build/test/CMakeFiles/test_single.dir
-=======
-/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/CMakeFiles/rebuild_cache.dir
-/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/CMakeFiles/edit_cache.dir
-/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/src/CMakeFiles/rebuild_cache.dir
-/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/src/CMakeFiles/edit_cache.dir
-/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/src/CMakeFiles/my_detect.dir
-/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/test/CMakeFiles/rebuild_cache.dir
-/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/test/CMakeFiles/edit_cache.dir
-/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/test/CMakeFiles/test_single.dir
->>>>>>> 3b20bcc61395e152391858756f02b36b45294077

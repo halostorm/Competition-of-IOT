@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/halo/PX4/Competition-of-IOT/detect_in_camera/src/config.cpp" "/home/halo/PX4/Competition-of-IOT/detect_in_camera/build/src/CMakeFiles/my_detect.dir/config.cpp.o"
+  "/home/pi/src/Competition-of-IOT/detect_in_camera/src/config.cpp" "/home/pi/src/Competition-of-IOT/detect_in_camera/build/src/CMakeFiles/my_detect.dir/config.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
