@@ -234,10 +234,10 @@ int main(int argc, char **argv) {
 					y_left = c_left[0].y;
 
 					cout << "target 3d corrdinate:" << endl << x_left * 1000
-							<< "		" << y_left * 1000 << "		" << z_left <
+							<< "		" << y_left * 1000 << "		" << z_left << endl;
 
 					//start control
-							error_x = x_left / z_left * 180 / 3.1416;
+					error_x = x_left / z_left * 180 / 3.1416;
 					error_y = y_left / z_left * 180 / 3.1416;
 					// pid input is angle error
 					KF.kalmanPredict(error_x, error_y);
