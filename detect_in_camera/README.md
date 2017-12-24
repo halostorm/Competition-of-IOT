@@ -11,3 +11,4 @@ cmake ..
 make
 cd ../bin
 ./test_single ../config/stereo_paras.yaml ../config/haarcascade_frontalface_alt.xml
+./test_double
