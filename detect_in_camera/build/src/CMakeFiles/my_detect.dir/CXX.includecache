@@ -30,9 +30,9 @@ ctime
 my_refind/common.h
 ../include/my_refind/my_refind/common.h
 
-/home/pi/src/Competition-of-IOT/detect_in_camera/src/config.cpp
+/home/halo/PX4/Competition-of-IOT/detect_in_camera/src/config.cpp
 my_refind/config.h
-/home/pi/src/Competition-of-IOT/detect_in_camera/src/my_refind/config.h
+/home/halo/PX4/Competition-of-IOT/detect_in_camera/src/my_refind/config.h
 
 /usr/local/include/opencv/cxcore.h
 opencv2/core/core_c.h
