@@ -111,19 +111,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-test/CMakeFiles/test.dir/rule:
-	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/test.dir/rule
-.PHONY : test/CMakeFiles/test.dir/rule
+test/CMakeFiles/test_single.dir/rule:
+	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/test_single.dir/rule
+.PHONY : test/CMakeFiles/test_single.dir/rule
 
 # Convenience name for target.
-test: test/CMakeFiles/test.dir/rule
+test_single: test/CMakeFiles/test_single.dir/rule
 
-.PHONY : test
+.PHONY : test_single
 
 # fast build rule for target.
-test/fast:
-	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/build
-.PHONY : test/fast
+test_single/fast:
+	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test_single.dir/build.make test/CMakeFiles/test_single.dir/build
+.PHONY : test_single/fast
 
 test_single.o: test_single.cpp.o
 
@@ -131,7 +131,7 @@ test_single.o: test_single.cpp.o
 
 # target to build an object file
 test_single.cpp.o:
-	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test_single.cpp.o
+	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test_single.dir/build.make test/CMakeFiles/test_single.dir/test_single.cpp.o
 .PHONY : test_single.cpp.o
 
 test_single.i: test_single.cpp.i
@@ -140,7 +140,7 @@ test_single.i: test_single.cpp.i
 
 # target to preprocess a source file
 test_single.cpp.i:
-	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test_single.cpp.i
+	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test_single.dir/build.make test/CMakeFiles/test_single.dir/test_single.cpp.i
 .PHONY : test_single.cpp.i
 
 test_single.s: test_single.cpp.s
@@ -149,7 +149,7 @@ test_single.s: test_single.cpp.s
 
 # target to generate assembly for a file
 test_single.cpp.s:
-	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test_single.cpp.s
+	cd /home/pi/src/Competition-of-IOT/detect_in_camera/build && $(MAKE) -f test/CMakeFiles/test_single.dir/build.make test/CMakeFiles/test_single.dir/test_single.cpp.s
 .PHONY : test_single.cpp.s
 
 # Help Target
@@ -160,7 +160,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... test"
+	@echo "... test_single"
 	@echo "... test_single.o"
 	@echo "... test_single.i"
 	@echo "... test_single.s"
